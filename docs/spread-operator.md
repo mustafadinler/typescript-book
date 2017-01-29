@@ -29,7 +29,7 @@ console.log(x, y, remaining); // 1, 2, [3,4]
 ```
 Bu örnekteki amaç, diziyi parçalarken dizide kalan eşleşmemiş elemanları kolay bir şekilde yakalayarak bir değişkene atamaktır.  
 
-#### Dizi Atama
+#### Dizi Atama (Birleştirme)
 Yayma operatörü, bir dizinin *yayılmış (genişletilmiş) versiyonunu* kolaylıkla başka bir dizinin içerisine yerleştirmenize olanak sağlar. Aşağıda bunun bir örneğini görebilirsiniz:
 
 ```ts
