@@ -1,41 +1,41 @@
-# Your JavaScript is TypeScript
+# JavaScript'iniz TypeScript'tir.
 
-There were (and will continue to be) a lot of competitors in *Some syntax* to *JavaScript* compilers. TypeScript is different from them in that *Your JavaScript is TypeScript*. Here's a diagram:
+Bazı sözdiziminden JavaScript derleyicilerine kadar birçok rakip vardı (ve olmaya devam edecektir). TypeScript onlardan şu şekilde farklıdır *JavaScript'iniz TypeScript'tir*. İşte bir şema:
 
 ![](https://raw.githubusercontent.com/basarat/typescript-book/master/images/venn.png)
 
-However it does mean that *you need to learn JavaScript* (the good news is *you **only** need to learn JavaScript*). TypeScript is just standardizing all the ways you provide *good documentation* on JavaScript.
+Ancak bunun anlamı *JavaScript öğrenmeniz gerekir* (iyi haber şu ki *sizin **sadece** JavaScript öğrenmeniz gerekmektedir*). TypeScript sadece JavaScript'teki sunulan *iyi dökümantasyon'u* standartlaştırmaktadır.
 
-* Just giving you a new syntax doesn't help fix bugs (looking at you CoffeeScript).
-* Creating a new language abstracts you too far from your runtimes, communities (looking at you Dart).
+* Size yeni bir sözdizimi verilmesi hataların düzeltilmesine yardımcı olmaz (CoffeeScript, gözüm üzerinde).
+* Yeni bir dil oluşturmak sizi çalışma zamanı ortamlarınızdan ve topluluklarınızdan uzaklaşmanızı sağlar (Dart, gözüm üzerinde).
 
-TypeScript is just JavaScript with docs.
+TypeScript, dökümanlarla JavaScript'tir.
 
-## Making JavaScript Better
+## JavaScript'i İyileştirmek
 
-TypeScript will try to protect you from portions of JavaScript that never worked (so you don't need to remember this stuff):
+TypeScript sizi hiç çalışmamış JavaScript parçalarından korumaya çalışacaktır (Bu sebeple bunları hatırlamanıza gerek yok):
 
 ```ts
-[] + []; // JavaScript will give you "" (which makes little sense), TypeScript will error
+[] + []; // JavaScript size "" verecek (ki mantıklı olan), TypeScript ise hata
 
 //
-// other things that are nonsensical in JavaScript
-// - don't give a runtime error (making debugging hard)
-// - but TypeScript will give a compile time error (making debugging unnecessary)
+// JavaScript'te saçma olan diğer konular
+// - çalışma zamanı hatası verme (hata ayıklamayı zorlaştırıyor)
+// - ama TypeScript çalışma zamanı hatası verecek (hata ayıklamayı gereksizleştiriyor)
 //
-{} + []; // JS : 0, TS Error
-[] + {}; // JS : "[object Object]", TS Error
-{} + {}; // JS : NaN, TS Error
-"hello" - 1; // JS : NaN, TS Error
+{} + []; // JS : 0, TS Hata
+[] + {}; // JS : "[object Object]", TS Hata
+{} + {}; // JS : NaN, TS Hata
+"merhaba" - 1; // JS : NaN, TS Hata
 
-function add(a,b) {
+function ekle(a,b) {
   return
-    a + b; // JS : undefined, TS Error 'unreachable code detected'
+    a + b; // JS : undefined, TS Hata 'unreachable code detected'
 }
 ```
 
-Essentially TypeScript is linting JavaScript. Just doing a better job at it than other linters that don't have *type information*.
+Esasen TypeScript JavaScript'i lint eder. Sadece tür bilgisi olmayan diğer lint araçlarından daha iyi bir iş çıkarıyor.
 
-## You still need to learn JavaScript
+## Hala JavaScript öğrenmeniz gerekiyor
 
-That said TypeScript is very pragmatic about the fact that *you do write JavaScript* so there are some things about JavaScript that you still need to know in order to not be caught off-guard. Let's discuss them next.
+Bunun anlamı TypeScript *JavaScript yazmanız* gerçeği hakkında çok pragmatik yani gafil avlanmamanız için JavaScript ile ilgili hala farkına varmanız gereken bazı şeyler var. Gelin sırada bunları tartışalım.
