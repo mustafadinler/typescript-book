@@ -16,12 +16,12 @@ TypeScript, dökümanlarla JavaScript'tir.
 TypeScript sizi hiç çalışmamış JavaScript parçalarından korumaya çalışacaktır (Bu sebeple bunları hatırlamanıza gerek yok):
 
 ```ts
-[] + []; // JavaScript size "" verecek (ki mantıklı olan), TypeScript ise hata
+[] + []; // JavaScript size "" sonucunu verecek (ki mantıklı olan), TypeScript ise hata
 
 //
-// JavaScript'te saçma olan diğer konular
-// - çalışma zamanı hatası verme (hata ayıklamayı zorlaştırıyor)
-// - ama TypeScript çalışma zamanı hatası verecek (hata ayıklamayı gereksizleştiriyor)
+// JavaScript'te anlamsız olan diğer konular
+// - çalışma zamanı hatası vermez (hata ayıklamayı zorlaştırıyor)
+// - ama TypeScript derleme zamanı hatası verecek (hata ayıklamayı gereksizleştiriyor)
 //
 {} + []; // JS : 0, TS Hata
 [] + {}; // JS : "[object Object]", TS Hata
@@ -34,8 +34,8 @@ function ekle(a,b) {
 }
 ```
 
-Esasen TypeScript JavaScript'i lint eder. Sadece tür bilgisi olmayan diğer lint araçlarından daha iyi bir iş çıkarıyor.
+Esasen TypeScript JavaScript'i potansiyel hatalar için analiz eder. Sadece benzer işi yapıp, tür bilgisi olmayan diğerlerinden daha iyi bir iş çıkarıyor.
 
 ## Hala JavaScript öğrenmeniz gerekiyor
 
-Bunun anlamı TypeScript *JavaScript yazmanız* gerçeği hakkında çok pragmatik yani gafil avlanmamanız için JavaScript ile ilgili hala farkına varmanız gereken bazı şeyler var. Gelin sırada bunları tartışalım.
+Bunun anlamı TypeScript *JavaScript yazmanız* gerçeği hakkında oldukça pragmatiktir. Yani gafil avlanmamanız için JavaScript ile ilgili hala farkına varmanız gereken bazı şeyler var. Gelin şimdi bunları tartışalım.
