@@ -1,10 +1,20 @@
- # Katkıda bulunmak için dikkat edilecekler
+ # Katkıda bulunmak isteyenler için Bilgilendirme: 
 
-- Öncelikle İngilizce'ye çevirdikten sonra iki farklı kişi gözden geçirecek. İki kişi onaylarsa merge edilecek. Pull request'i merge edecek kişi aynı isimle sonuna "gözden geçirilecek" ekleyerek yeni bir issue açacak. Bu issue ile amaç imla kuralları ve yazımı denetlemek.
-- Çeviri ile ilgili görevler(issue) https://github.com/CodeFiction/typescript-book/issues adresinde mevcuttur. Katkıda bulunmak istediğiniz konuya yorum bırakarak son durumu sorabilirsiniz. Katılmak için talepte bulunabilirsiniz. 
+*typescript-book kitabının yerelleştirmesini yaparken hedefimiz birebir çeviriden ziyade, bir Türk okuyucu tarafından bütünüyle anlaşılır bir kaynak oluşturmaktır.*
+
+### Yerelleştirme İşlemi Aşamaları
+1. Katkıda bulunmak isteyenler, ilgili repository'de açılan issue'lar içerisinden (https://github.com/CodeFiction/typescript-book/issues) bir görevi üstlenip, değişiklikleri ve çevirileri kendi kopyası (forku) üzerinden gerçekleştirir. 
+2. Gerekli değişiklikler yapıldıktan sonra ana repository'e Pull Request gönderilir. 
+	..* Ana reposory'e gelen pull request'ini **iki farklı kişi** gözden geçirir.
+	..* İki ayrı kullanıcının da onayını alan pull request sonrasında ana repository'e merge (rebase and merge yöntemiyle) edilir. 
+	..* Gelen pull request'i merge işlemini gerçekleştiren kişi, aynı isimle sonuna "gözden geçirilecek" ekleyerek yeni bir issue açar. *(Açılan bu issue ile amacımız, yapılan değişikliklerin Türkçe dil ve imla kurallarına uygunluğunun denetlenmesini sağlamak.)*
+
+### Ek Notlar
+- Katkıda bulunmak istediğiniz konuya yorum bırakarak son durumu sorabilirsiniz. Katılmak için talepte bulunabilirsiniz. 
 - Atanmış bir issue ile ilgili yardımcı olabilecekseniz issue sahibi ile iletişim geçilmelisiniz.
-- Üzerinizdeki görevi(issue) bırakmanız gerekirse lütfen topluluğu haberdar ediniz.
-- Çeviri yapmak için öncelikle "fork" edip. Sonra pull request göndermeniz gerekli. 
-- Çeviri yaparken hedefimiz birebir çeviriden ziyade, bir Türk okuyucu için anlamlı cümlelerin oluşturulmasıdır.
-- Teknik terimlerin çevirisinde bir bütünlük sağlamak amacı ile bir [sözlük](GLOSSARY.md) oluşturulmuştur. Lütfen çevirinizi yaparken ve bir Pull Request'i incelerken bu sözlükte yer alan terimleri takip ediniz. 
-- Görüş ve önerileriniz için gitter kanalına bekleriz. https://gitter.im/codefiction/typescript-book
+- Üzerinizdeki görevi(issue) bırakmanız gerekirse lütfen topluluğa ilgili Gitter kanalı üzerinden haber veriniz.
+- Teknik terimlerin çevirisinde bir bütünlük sağlamak amacı ile bir [sözlük](GLOSSARY.md) oluşturulmaktadır. Lütfen çevirinizi yaparken ve bir Pull Request'i incelerken bu sözlükte yer alan terimleri takip ediniz. 
+- Diğer görüş ve önerileriniz için gitter kanalına bekleriz. https://gitter.im/codefiction/typescript-book
+
+
+:tr: Codefiction Ekibi
