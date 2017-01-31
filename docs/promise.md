@@ -38,7 +38,7 @@ Bu basit `loadJSONSync` fonksiyonunun üç davranışı vardır. Geçerli bir d�
 ```ts
 import fs = require('fs');
 
-// A decent initial attempt .... but not correct. We explain the reasons below
+// uygun bir ilk deneme... ama yanlış çalışıyor. Sebeplerini aşağıda açıklayacağız.
 function loadJSON(filename: string, cb: (error: Error, data: any) => void) {
     fs.readFile(filename, function (err, data) {
         if (err) cb(err);
@@ -57,7 +57,7 @@ Bu basit fonksiyon 2. noktada çalışmakta problem yaşıyor. Aslında eğer ge
 ```ts
 import fs = require('fs');
 
-// A decent initial attempt .... but not correct
+// uygun bir ilk deneme ama çalışmıyor.
 function loadJSON(filename: string, cb: (error: Error, data: any) => void) {
     fs.readFile(filename, function (err, data) {
         if (err) cb(err);
@@ -65,7 +65,7 @@ function loadJSON(filename: string, cb: (error: Error, data: any) => void) {
     });
 }
 
-// load invalid json
+// hatalı json yüklüyoruz
 loadJSON('invalid.json', function (err, data) {
     // This code never executes
     if (err) console.log('bad.json error', err.message);
@@ -78,7 +78,7 @@ Bu durumu düzeltmek için naifçe bir çaba, JSON.parse'ı bir try/catch'e alma
 ```ts
 import fs = require('fs');
 
-// A better attempt ... but still not correct
+// daha iyi bir deneme ama hala hatalı
 function loadJSON(filename: string, cb: (error: Error) => void) {
     fs.readFile(filename, function (err, data) {
         if (err) {
@@ -95,15 +95,14 @@ function loadJSON(filename: string, cb: (error: Error) => void) {
     });
 }
 
-// load invalid json
+// hatalı json yüklüyoruz
 loadJSON('invalid.json', function (err, data) {
     if (err) console.log('bad.json error', err.message);
     else console.log(data);
 });
 ```
 
-Yine de bu kodda yakalaması zor bir hata var. Eğer JSON.parse değil de callback hata fırlatırsa, biz bunu try catch ile sarmaladığımız için catch çalışır ve callback'i bir daha çağırırız. Bu örnekte callback iki defa çağırılır! Bu aşağıdaki örnekte gösterilmiştir:
-However there is a subtle bug in this code. If the callback (`cb`), and not `JSON.parse`, throws an error, since we wrapped it in a `try`/`catch`, the `catch` executes and we call the callback again i.e. the callback gets called twice! This is demonstrated in the example below:
+Yine de bu kodda yakalaması zor bir hata var. Eğer `JSON.parse` değil de callback(`cb`) hata fırlatırsa, biz bunu `try`/`catch` ile sarmaladığımız için `catch` çalışır ve callback'i bir daha çağırırız. Bu örnekte callback iki defa çağırılır! Bu aşağıdaki örnekte gösterilmiştir:
 
 ```ts
 import fs = require('fs');
@@ -124,24 +123,24 @@ function loadJSON(filename: string, cb: (error: Error) => void) {
     });
 }
 
-// a good file but a bad callback ... gets called again!
+// düzgün bir dosya ama hatalı bir callback... tekrar çağırılıyor
 loadJSON('good.json', function (err, data) {
-    console.log('our callback called');
+    console.log('callback çağırıldı');
 
     if (err) console.log('Error:', err.message);
     else {
-        // let's simulate an error by trying to access a property on an undefined variable
+        // atanmamış(undefined) bir değerdeki bir alana erişmeye çalışarak bir hata simüle ediyoruz
         var foo;
-        // The following code throws `Error: Cannot read property 'bar' of undefined`
+        // aşağıdaki kod `Error: Cannot read property 'bar' of undefined` hatası verecektir
         console.log(foo.bar);
     }
 });
 ```
 
-```bash
+```bash(konsol)
 $ node asyncbadcatchdemo.js
-our callback called
-our callback called
+callback çağırıldı
+callback çağırıldı
 Error: Cannot read property 'bar' of undefined
 ```
 
@@ -157,59 +156,60 @@ import fs = require('fs');
 function loadJSON(filename: string, cb: (error: Error) => void) {
     fs.readFile(filename, function (err, data) {
         if (err) return cb(err);
-        // Contain all your sync code in a try catch
+        // senkronize çalışması gereken tüm kodu try'ın içine alın
         try {
             var parsed = JSON.parse(data);
         }
         catch (err) {
             return cb(err);
         }
-        // except when you call the callback
+        // callback'i çağırdığınız an hariç
         return cb(null, parsed);
     });
 }
 ```
-Admittedly this is not hard to follow once you've done it a few times but nonetheless it’s a lot of boiler plate code to write simply for good error handling. Now let's look at a better way to tackle asynchronous JavaScript using promises.
+Bunu birkaç kez yaptıktan sonra çok daha kolay olmakla beraber basit bir hata yakalama için bu çok fazla boilerplate kod yazmak anlamına geliyor. Şimdi promise'leri kullanarak javascript'te asenkron kodla uğraşmanın daha iyi bir yolunu bulalım.
 
-## Creating a Promise
 
-A promise can be either `pending` or `resolved` or `rejected`.
+## Bir Promise oluşturmak
+
+Bir promise `pending`(çalışmaya devam ediyor), `resolved`(çalışması sonlanmış) veya `rejected`(reddedilmiş) durumunda olabilir.
 
 ![](https://raw.githubusercontent.com/basarat/typescript-book/master/images/promise%20states%20and%20fates.png)
 
-Let's look at creating a promise. Its a simple matter of calling `new` on `Promise` (the promise constructor). The promise constructor is passed `resolve` and `reject` functions for settling the promise state.
+Bir promise oluşturalım. Bunun için promise ctor'u üzerinde `new` kelimesini çalıştırmak yeterli. `resolve` and `reject` fonksiyonları promise'in durumunu almak için constructor'a geçilir.
 
 ```ts
 const promise = new Promise((resolve, reject) => {
-    // the resolve / reject functions control the fate of the promise
+    // resolve / reject fonksiyonları promise'in sonucunu belirler
 });
 ```
 
-### Subscribing to the fate of the promise
+### Promise'in sonucuna abone olmak
 
-The promise fate can be subscribed to using `.then` (if resolved) or `.catch` (if rejected).
+Promise'in sonucu `.then`(eğer sonlanmış ise) veya `.catch`(eğer reddedilmiş ise) metotları ile gözlemlenebilir.
 
 ```ts
 const promise = new Promise((resolve, reject) => {
     resolve(123);
 });
 promise.then((res) => {
-    console.log('I get called:', res === 123); // I get called: true
+    console.log('I get called:', res === 123); // Ben çağırıldım. Sonuç: true
 });
 promise.catch((err) => {
-    // This is never called
+    // Burası hiç çağırılmadı
 });
 ```
 
 ```ts
 const promise = new Promise((resolve, reject) => {
-    reject(new Error("Something awful happened"));
+    reject(new Error("Çok kötü bir şey oldu."));
 });
 promise.then((res) => {
-    // This is never called
+    // Burası hiç çağırılmadı
 });
 promise.catch((err) => {
-    console.log('I get called:', err.message); // I get called: 'Something awful happened'
+    console.log('Çağırıldım :', err.message); // Çağırıldım : "Çok kötü bir şey oldu"
 });
 ```
 
@@ -217,7 +217,7 @@ promise.catch((err) => {
 * Quickly creating an already resolved promise : `Promise.resolve(result)`
 * Quickly creating an already rejected promise : `Promise.reject(error)`
 
-### Chain-ability of Promises
+### Promise'lerin zincirlenebilmesi
 The chain-ability of promises **is the heart of the benefit that promises provide**. Once you have a promise, from that point on, you use the `then` function to create a chain of promises.
 
 * If you return a promise from any function in the chain, `.then` is only called once the value is resolved
