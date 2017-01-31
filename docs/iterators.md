@@ -1,8 +1,7 @@
-### Iterators
+### Yineleyiciler
 
-Iterator itself is not a TypeScript or ES6 feature, Iterator is a
-Behavioral Design Pattern common for Object oriented programming languages.
-It is, generally, an object which implements the following interface:
+Yineleyici kavramı ne TypeScript ne de ES6'e ait bir özelliktir. Yineleyici Nesneye Dayalı Programlama dilleri için ortak bir davranışsal tasarım desenidir.
+Bu kavram, genellikle, aşağıdaki arayüzü uygulayan nesnedir:
 
 ```ts
 interface Iterator<T> {
@@ -12,12 +11,10 @@ interface Iterator<T> {
 }
 ```
 
-This interface allows to retrieve a value from some collection or sequence
-which belongs to the object.
+Bu arayüz, nesneye ait olan bir koleksiyon veya diziden değer elde etmeyi sağlar.
 
-Imagine that there's an object of some frame, which includes the list of
-components of which this frame consists. With Iterator interface it is possible
-to retrieve components from this frame object like below:
+Kendisini oluşturan bileşenlerin listesini içeren yapıya ait bir nesne tasarlanmış olduğunu düşünün.
+Yineleyici arayüzü ile bu nesneden bileşenlerini almak aşağıdaki gibi mümkündür:
 
 ```ts
 'use strict';
@@ -54,16 +51,17 @@ let iteratorResult3 = frame.next(); //{ done: false, value: Component { name: 'l
 let iteratorResult4 = frame.next(); //{ done: false, value: Component { name: 'right' } }
 let iteratorResult5 = frame.next(); //{ done: true }
 
-//It is possible to access the value of iterator result via the value property:
+//Yineleyici sonucunun değerine 'value' özelliği aracılığıyla ulaşmak mümkündür.
 let component = iteratorResult1.value; //Component { name: 'top' }
 ```
-Again. Iterator itself is not a TypeScript feature, this code could work without
-implementing Iterator and IteratorResult interfaces explicitly.
-However it is very helpful to use these common
-ES6 [interfaces](./types/interfaces.md) for code consistency.
 
-Ok, Nice, but could be more helpful. ES6 defines the *iterable protocol*
-which includes [Symbol.iterator] `symbol` if Iterable interface implemented:
+Tekrar belirtmek gerekirse yineleyici bir TypeScript özelliği değildir.  Bu kod Iterator ve IteratorResult arayüzlerini açıkça uygulamadan da çalışabilir.
+
+Ancak, kod tutarlılığı için, bu ortak ES6 arayüzlerini (./types/interfaces.md) kullanmak çok yararlı olacaktır.
+
+Peki, iyi güzel, fakat daha da yararlı nasıl kullanabilir? ES6 [Symbol.iterator] `sembol` içeren *tekrarlanabilir protokol* tanımlar. 
+Iterable arayüzü şu şekilde uygulanabilir:
+
 ```ts
 //...
 class Frame implements Iterable<Component> {
@@ -102,8 +100,9 @@ for (let cmp of frame) {
 }
 ```
 
-Unfortunately `frame.next()` won't work with this pattern and it also looks
-a bit clunky. IterableIterator interface to the rescue!
+Ne yazık ki bu tasarımla `frame.next()` çalışmaz ve bir takım işler eksikmiş gibi gözükür. 
+IterableIterator arayüzü durumu kurtarmak için imdadımıza şu şekilde yetişir:
+
 ```ts
 //...
 class Frame implements IterableIterator<Component> {
@@ -132,10 +131,12 @@ class Frame implements IterableIterator<Component> {
 }
 //...
 ```
-Both `frame.next()` and `for` cycle now work fine with IterableIterator interface.
 
-Iterator does not have to iterate a finite value.
-The typical example is a Fibonacci sequence:
+IterableIterator arayüzü ile `frame.next()` ve `for` döngüleri olması gerektiği gibi çalışabilir.
+
+Yineleyicinin sonlu bir değeri yinelemesi gerekmez.
+Bununla ilgili tipik örnek olarak Fibonacci dizisi şu şekilde uygulanır:
+
 ```ts
 class Fib implements IterableIterator<number> {
 
@@ -183,9 +184,8 @@ for(let num of fibMax21) {
 }
 ```
 
-#### Building code with iterators for ES5 target
-Code examples above require ES6 target, however it could work
-with ES5 target as well if target JS engine supports `Symbol.iterator`.
-This can be achieved by using ES6 lib with ES5 target
-(add es6.d.ts to your project) to make it compile.
-Compiled code should work in node 4+, Google Chrome and in some other browsers.
+#### ES5 hedef alınarak yineleyicilerle kod oluşturma
+Yukarıdaki kod örneklerinin çalıştırılabilmesi için ES6 hedef olarak gösterilmesi gerekmektedir, ancak ES5 kullanarak, `Symbol.iterator` yapısını destekleyen bir JS motoru ile de kodlar derlenebilir.
+Buda ES5 hedef alınarak, ES6 kütüphanesi kullanılarak gerçekleştirilebilir(Projenize es6.d.ts kütüphanesini ekleyip derleyin.)
+Derlenmiş kod node 4+, Google Chrome ve bazı diğer tarayıcılarda çalışacaktır.
+
