@@ -1,5 +1,5 @@
 ### Rest Parametreleri
-Rest parametreleri, belirsiz sayıda argümanı bir dizi olarak alan fonksiyonlar oluşturabilmenize olanak sağlar. Tanımlaması ise, fonksiyonun son argümanının `...argumentName` olarak ifade edilmesi ile gerçekleştirilir. Aşağıdaki örneği inceleyiniz.
+Rest parametreleri, belirsiz sayıda argümanı bir dizi olarak alan fonksiyonlar oluşturabilmenize olanak sağlar. Tanımlaması ise, fonksiyonun son argümanının `...argumanIsmi` olarak ifade edilmesi ile gerçekleştirilir. Aşağıdaki örneği inceleyiniz.
 
 ```ts
 function iTakeItAll(first, second, ...allOthers) {
