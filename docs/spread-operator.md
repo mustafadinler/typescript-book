@@ -39,7 +39,7 @@ console.log(list); // [1,2,3,4]
 ```
 
 #### Özet
-`apply` fonksiyonu JavaScript ile çalışırken kaçınılmaz olarak kullanacağınız bir ifadedir, bu sebeple `apply` fonksiyonunun ilk argümanı olan `this` yerine uygunsuz ve neredeyse çirkin denilebilecek bir sözdizimine yol açan`null` kullanmak yerine daha düzgün bir sözdizimi getiren *spread (yayma) operatörü* kullanmayı tercih edebilirsiniz. 
-Bununla birlikte  *spread (yayma) operatörü*,  kısmı diziler üzerinden yapılan parçalamak ve birleştirme işlemleri için çok daha zarif bir söz dizimi sunmaktadır.
+`apply` fonksiyonu JavaScript ile çalışırken kaçınılmaz olarak kullanacağınız bir ifadedir, bu sebeple `apply` fonksiyonunun ilk argümanı olan `this` yerine uygunsuz ve neredeyse çirkin denilebilecek bir sözdizimine yol açan `null` kullanmak yerine daha düzgün bir sözdizimi getiren *spread (yayma) operatörü* kullanmayı tercih edebilirsiniz. 
+Bununla birlikte  *spread (yayma) operatörü*,  kısmı diziler üzerinden yapılan parçalama ve birleştirme işlemleri için çok daha zarif bir sözdizimi sunmaktadır.
 
 [](https://github.com/Microsoft/TypeScript/pull/1931)
