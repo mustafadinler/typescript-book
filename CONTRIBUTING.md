@@ -1,23 +1,20 @@
-# Contributing
+ # Katkıda bulunmak isteyenler için Bilgilendirme: 
 
-This book is developed using [GitBook](https://github.com/GitbookIO/gitbook). Authored in Markdown files (I use [atom](http://atom.io)).
+*typescript-book kitabının yerelleştirmesini yaparken hedefimiz birebir çeviriden ziyade, bir Türk okuyucu tarafından bütünüyle anlaşılır bir kaynak oluşturmaktır.*
 
-Here's how to setup a Dev Environment:
+### Yerelleştirme İşlemi Aşamaları
+1. Katkıda bulunmak isteyenler, ilgili repository'de açılan issue'lar içerisinden (https://github.com/CodeFiction/typescript-book/issues) bir görevi üstlenip, değişiklikleri ve çevirileri kendi kopyası (forku) üzerinden gerçekleştirir. 
+2. Gerekli değişiklikler yapıldıktan sonra ana repository'e Pull Request gönderilir. 
+	..* Ana reposory'e gelen pull request'ini **iki farklı kişi** gözden geçirir.
+	..* İki ayrı kullanıcının da onayını alan pull request sonrasında ana repository'e merge (rebase and merge yöntemiyle) edilir. 
+	..* Gelen pull request'i merge işlemini gerçekleştiren kişi, aynı isimle sonuna "gözden geçirilecek" ekleyerek yeni bir issue açar. *(Açılan bu issue ile amacımız, yapılan değişikliklerin Türkçe dil ve imla kurallarına uygunluğunun denetlenmesini sağlamak.)*
 
-```
-npm install gitbook-cli -g
-gitbook serve .
-```
-Note: serve needs port `35729` (for live reload) and `4000` for serving http://localhost:4000.
+### Ek Notlar
+- Katkıda bulunmak istediğiniz konuya yorum bırakarak son durumu sorabilirsiniz. Katılmak için talepte bulunabilirsiniz. 
+- Atanmış bir issue ile ilgili yardımcı olabilecekseniz issue sahibi ile iletişim geçilmelisiniz.
+- Üzerinizdeki görevi(issue) bırakmanız gerekirse lütfen topluluğa ilgili Gitter kanalı üzerinden haber veriniz.
+- Teknik terimlerin çevirisinde bir bütünlük sağlamak amacı ile bir [sözlük](GLOSSARY.md) oluşturulmaktadır. Lütfen çevirinizi yaparken ve bir Pull Request'i incelerken bu sözlükte yer alan terimleri takip ediniz. 
+- Diğer görüş ve önerileriniz için gitter kanalına bekleriz. https://gitter.im/codefiction/typescript-book
 
-Also you can mostly just edit the `.md` files in [`/docs`](https://github.com/basarat/typescript-book/docs) using github and create a Pull Request (PR).
 
-# Code
-All the code for the book is in the `/code` folder. Tested with `atom-typescript`.
-
-#### More Gitbook Tips
-* Links best work if they are relative (e.g `./foo.md`) to the *current* file.
-* For links in the same file (`#foo-bar` style links) best to click the heading on github to get what gitbook expects.
-
-### TypeScript Compiler Docs
-Thanks to the TypeScript team for providing much of the docs : https://github.com/Microsoft/TypeScript/wiki/Architectural-Overview that are used to write the compiler story.
+:tr: Codefiction Ekibi
