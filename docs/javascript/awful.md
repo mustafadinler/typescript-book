@@ -16,7 +16,7 @@ console.log(0 == undefined); // false
 console.log('' == undefined); // false
 console.log(false == undefined); // false
 ```
-Tavsiyem `undefined` veya `null`, ikisi için de `== null` ile kontrol etmelisiniz. Genellikle bu ikisi arasında bir ayrım yapmak istemezsiniz.
+Tavsiyem `undefined` veya `null` , ikisi için de `== null` ile kontrol etmelisiniz. Genellikle bu ikisi arasında bir ayrım yapmak istemezsiniz.
 
 ## undefined
 

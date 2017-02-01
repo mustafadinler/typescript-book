@@ -13,7 +13,7 @@ TypeScript, dökümanlarla JavaScript'tir.
 
 ## JavaScript'i İyileştirmek
 
-TypeScript sizi hiç çalışmamış JavaScript parçalarından korumaya çalışacaktır (Bu sebeple bunları hatırlamanıza gerek yok):
+TypeScript sizi hiç çalışmamış JavaScript parçalarından korumaya çalışacaktır ( Bu sebeple bunları hatırlamanıza gerek yok):
 
 ```ts
 [] + []; // JavaScript size "" sonucunu verecek (ki mantıklı olan), TypeScript ise hata
