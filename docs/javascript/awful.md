@@ -2,7 +2,7 @@
 
 İşte JavaScript'in bilmeniz gereken bazı kötü (anlaşılmaz) tarafları.
 
-> Not: TypeScript, JavaScript'in süpersetidir. Aslında derleyiciler/IDE'ler tarafından kullanılan dökümantasyonlu halidir ;)
+> Not: TypeScript, JavaScript'in süpersetidir. Aslında derleyiciler/IDE'ler tarafından kullanılan dokümantasyonlu halidir ;)
 
 ## Null ve Undefined
 
@@ -20,7 +20,7 @@ Tavsiyem `undefined` veya `null`, ikisi için de `== null` ile kontrol etmelisin
 
 ## undefined
 
-Hatırlarsanız `== null` kullanmanız gerektiğini söylemiştim. Tabi ki kullanacaksınız (çünkü ben öyle söyledim ^). Kök seviyesindeki şeyler için kullanmayın. Katı modda (strict mode) eğer `foo` kullanırsanız ve `foo` tanımlanmamış (undefined) ise, `ReferenceError` **hatası** alırsınız ve tüm çağrı kümeniz bozulur.
+Hatırlarsanız `== null` kullanmanız gerektiğini söylemiştim. Tabii ki kullanacaksınız (çünkü ben öyle söyledim ^). Kök seviyesindeki şeyler için kullanmayın. Katı modda (strict mode) eğer `foo` kullanırsanız ve `foo` tanımlanmamış (undefined) ise, `ReferenceError` **hatası** alırsınız ve tüm çağrı kümeniz bozulur.
 
 > Katı mod (strict mode) kullanmalısınız ... ve aslında TS derleyicisi eğer modül kullanırsanız sizin için bunu ekleyecektir ... daha fazlası kitabın ilerleyen bölümlerinde var yani şu anda açık şekilde anlamış olmanız gerekmez :)
 
@@ -35,7 +35,7 @@ if (typeof someglobal !== 'undefined') {
 
 ## this
 
-Bir fonksiyon içindeki `this` anahtar sözcüğüne herhangi bir erişim , aslında fonksiyonun nasıl çağrıldığına göre kontrol edilir. Genellikle `çağrı bağlamı (calling context)` olarak bahsedilir.
+Bir fonksiyon içindeki `this` anahtar sözcüğüne herhangi bir erişim, aslında fonksiyonun nasıl çağrıldığına göre kontrol edilir. Genellikle `çağrı bağlamı (calling context)` olarak bahsedilir.
 
 Aşağıdaki örnek bunu açıklamaktadır:
 

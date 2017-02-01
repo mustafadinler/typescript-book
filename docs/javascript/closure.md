@@ -1,25 +1,25 @@
-## Closure
+## Kapsanım
 
-The best thing that JavaScript ever got was closures. A function in JavaScript has access to any variables defined in the outer scope. Closures are best explained with examples:
+JavaScript'in sahip olduğu en iyi şey kapsanımlardır. JavaScript'de bir fonksiyon dış faaliyet alanında tanımlanmış herhangi bir değişkene erişebilir. Kapsanımlar en iyi şekilde örneklerle açıklanabilir:
 
 ```ts
 function outerFunction(arg) {
     var variableInOuterFunction = arg;
 
     function bar() {
-        console.log(variableInOuterFunction); // Access a variable from the outer scope
+        console.log(variableInOuterFunction); // Dış faaliyet alanındaki bir değişkene erişim 
     }
 
-    // Call the local function to demonstrate that it has access to arg
+    // arg'ye erişim olduğunu göstermek için yerel fonksiyon çağrısı
     bar();
 }
 
-outerFunction("hello closure"); // logs hello closure!
+outerFunction("merhaba kapsanım"); // merhaba kapsanım çıktısı üretir!
 ```
 
-You can see that the inner function has access to a variable (variableInOuterFunction) from the outer scope. The variables in the outer function have been closed by (or bound in) the inner function. Hence the term **closure**. The concept in itself is simple enough and pretty intuitive.
+Gördüğünüz üzere iç fonksiyonun, dış faaliyet alanındaki değişkene (variableInOuterFunction) erişimi vardır. Dış fonksiyondaki değişkenler iç fonksiyon tarafından kapatılmıştır (veya bağlanmıştır). Bu nedenle terim **kapsanım**. Kendi içindeki kavram yeterince basit ve oldukça sezgisel.
 
-Now the awesome part: The inner function can access the variables from the outer scope *even after the outer function has returned*. This is because the variables are still bound in the inner function and not dependent on the outer function. Again let's look at an example:
+Şimdi en harika kısmı: *Dış fonksiyon geri döndükten sonra bile* iç fonksiyon, dış faaliyet alanındaki değişkenlere erişebilir. Bunun nedeni, değişkenlerin hala iç fonksiyona bağlı olması ve dış fonksiyona bağımlı olmamasıdır. Gelin tekrar örneğe bakalım:
 
 ```ts
 function outerFunction(arg) {
@@ -29,14 +29,14 @@ function outerFunction(arg) {
     }
 }
 
-var innerFunction = outerFunction("hello closure!");
+var innerFunction = outerFunction("merhaba kapsanım!");
 
-// Note the outerFunction has returned
-innerFunction(); // logs hello closure!
+// outerFunction geri geldiğine dikkat edin
+innerFunction(); // merhaba kapsanım! çıktısı üretir
 ```
 
-### Reason why it's awesome
-It allows you to compose objects easily e.g. the revealing module pattern:
+### Harika olmasının sebebi
+Size nesneleri kolayca oluşturmanızı sağlar, örneğin açıklayıcı modül kalıbı:
 
 ```ts
 function createCounter() {
@@ -54,13 +54,13 @@ counter.increment();
 console.log(counter.getVal()); // 2
 ```
 
-At a high level it is also what makes something like nodejs possible (don't worry if it doesn't click in your brain right now. It will eventually 🌹):
+Üst seviyede nodejs gibi bir şeyi mümkün kılan şey de budur (Kafanızda şekillenmediyse endişelenmeyin. Sonunda olacak 🌹):
 
 ```ts
-// Pseudo code to explain the concept
+// Kavramı açıklamak için sözde kod (pseudo code)
 server.on(function handler(req, res) {
     loadData(req.id).then(function(data) {
-        // the `res` has been closed over and is available
+        // `res` kapatıldı ve hazır
         res.send(data);
     })
 });
