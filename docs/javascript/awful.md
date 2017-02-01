@@ -1,60 +1,60 @@
-# JavaScript the awful parts
+# JavaScript'in kötü tarafları
 
-Here are some awful (misunderstood) parts of JavaScript that you must know.
+İşte JavaScript'in bilmeniz gereken bazı kötü (anlaşılmaz) tarafları.
 
-> Note: TypeScript is a superset of JavaScript. Just with documentation that can actually be used by compilers / IDEs ;)
+> Not: TypeScript, JavaScript'in süpersetidir. Aslında derleyiciler/IDE'ler tarafından kullanılan dökümantasyonlu halidir ;)
 
-## Null and Undefined
+## Null ve Undefined
 
-Fact is you will need to deal with both. Just check for either with `==` check.
+Gerçek şu ki ikisiyle de uğraşmanız gerekecektir. İkisi için de `==` ile kontrol edelim.
 
 ```ts
-/// Imagine you are doing `foo.bar == undefined` where bar can be one of:
+/// bar aşagıdakilerden biri iken `foo.bar == undefined` yaptığınızı düşünün:
 console.log(undefined == undefined); // true
 console.log(null == undefined); // true
 console.log(0 == undefined); // false
 console.log('' == undefined); // false
 console.log(false == undefined); // false
 ```
-Recommend `== null` to check for both `undefined` or `null`. You generally don't want to make a distinction between the two.
+Tavsiyem `undefined` veya `null`, ikisi için de `== null` ile kontrol etmelisiniz. Genellikle bu ikisi arasında bir ayrım yapmak istemezsiniz.
 
 ## undefined
 
-Remember how I said you should use `== null`. Of course you do (cause I just said it ^). Don't use it for root level things. In strict mode if you use `foo` and `foo` is undefined you get a `ReferenceError` **exception** and the whole call stack unwinds.
+Hatırlarsanız `== null` kullanmanız gerektiğini söylemiştim. Tabi ki kullanacaksınız (çünkü ben öyle söyledim ^). Kök seviyesindeki şeyler için kullanmayın. Katı modda (strict mode) eğer `foo` kullanırsanız ve `foo` tanımlanmamış (undefined) ise, `ReferenceError` **hatası** alırsınız ve tüm çağrı kümeniz bozulur.
 
-> You should use strict mode ... and in fact the TS compiler will insert it for you if you use modules ... more on those later in the book so you don't have to be explicit about it :)
+> Katı mod (strict mode) kullanmalısınız ... ve aslında TS derleyicisi eğer modül kullanırsanız sizin için bunu ekleyecektir ... daha fazlası kitabın ilerleyen bölümlerinde var yani şu anda açık şekilde anlamış olmanız gerekmez :)
 
-So to check if a variable is defined or not at a *global* level you normally use `typeof`:
+Yani bir değişkenin *global* düzeyde tanımlanıp tanımlanmadığını kontrol etmek için `typeof` kullanılır:
 
 ```ts
 if (typeof someglobal !== 'undefined') {
-  // someglobal is now safe to use
+  // someglobal şu anda kullanım için güvenlidir
   console.log(someglobal);
 }
 ```
 
 ## this
 
-Any access to `this` keyword within a function is actually controlled by how the function is actually called. It is commonly referred to as the `calling context`.
+Bir fonksiyon içindeki `this` anahtar sözcüğüne herhangi bir erişim , aslında fonksiyonun nasıl çağrıldığına göre kontrol edilir. Genellikle `çağrı bağlamı (calling context)` olarak bahsedilir.
 
-Here is an example:
+Aşağıdaki örnek bunu açıklamaktadır:
 
 ```ts
 function foo() {
   console.log(this);
 }
 
-foo(); // logs out the global e.g. `window` in browsers
+foo(); // global olarak çıktı verir örneğin tarayıcılardaki `window` 
 let bar = {
   foo
 }
-bar.foo(); // Logs out `bar` as `foo` was called on `bar`
+bar.foo(); // `bar` üzerinde çağrıldığında `foo` olarak `bar` çıktısı verir
 ```
 
-So be mindful of your usage of `this`. If you want to disconnect `this` in a class from the calling context use an arrow function, [more on that later][arrow].
+Bu nedenle `this` kullanımınızda dikkatli olun . Eğer çağırdığınız bağlamda gelen sınıfın icindeki `this`'ten kopmak isterseniz ok fonksiyonlarını kullanın, [daha fazlası][ok].
 
-[arrow]:../arrow-functions.md
+[ok]:../arrow-functions.md
 
-## Next
+## Sıradaki
 
-That's it. Those are the simple *misunderstood* portions of JavaScript that still result in various bugs for developers that are new to the language 🌹.
+İşte bu. Bunlar JavaScript'in bazı yanlış anlaşılan parçalarıdır ve hala bu dilde yeni olan geliştiriciler için çeşitli hatalarla sonuçlanır 🌹.
