@@ -59,7 +59,7 @@ Tekrar belirtmek gerekirse yineleyici bir TypeScript özelliği değildir.  Bu k
 
 Ancak, kod tutarlılığı için, bu ortak ES6 arayüzlerini (./types/interfaces.md) kullanmak çok yararlı olacaktır.
 
-Peki, iyi güzel, fakat daha da yararlı nasıl kullanabilir? ES6 [Symbol.iterator] `sembol` içeren *tekrarlanabilir protokol* tanımlar. 
+Peki, iyi guzel de, daha da yararlı nasıl kullanılabilir? ES6 [Symbol.iterator] `sembol` içeren *tekrarlanabilir protokol* tanımlar. 
 Iterable arayüzü şu şekilde uygulanabilir:
 
 ```ts
@@ -100,7 +100,7 @@ for (let cmp of frame) {
 }
 ```
 
-Ne yazık ki bu tasarımla `frame.next()` çalışmaz ve bir takım işler eksikmiş gibi gözükür. 
+Ne yazık ki bu tasarımla `frame.next()` çalışmaz ve bir takım işler eksikmiş gibi görünür. 
 IterableIterator arayüzü durumu kurtarmak için imdadımıza şu şekilde yetişir:
 
 ```ts
