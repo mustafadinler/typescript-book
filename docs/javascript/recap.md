@@ -38,4 +38,4 @@ Esasen TypeScript JavaScript'i potansiyel hatalar için analiz eder. Sadece benz
 
 ## Hala JavaScript öğrenmeniz gerekiyor
 
-Bunun anlamı TypeScript *JavaScript yazmanız* gerçeği hakkında oldukça pragmatiktir. Yani gafil avlanmamanız için JavaScript ile ilgili hala farkına varmanız gereken bazı şeyler var. Gelin şimdi bunları tartışalım.
+Bunun anlamı TypeScript *JavaScript yazmanız* gerçeği hakkında oldukça faydalıdır. Yani gafil avlanmamanız için JavaScript ile ilgili hala farkına varmanız gereken bazı şeyler var. Gelin şimdi bunları tartışalım.
