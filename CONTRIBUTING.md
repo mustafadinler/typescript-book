@@ -11,7 +11,7 @@
 
 ### Ek Notlar
 - Katkıda bulunmak istediğiniz konuya yorum bırakarak son durumu sorabilirsiniz. Katılmak için talepte bulunabilirsiniz. 
-- Atanmış bir issue ile ilgili yardımcı olabilecekseniz issue sahibi ile iletişim geçilmelisiniz.
+- Atanmış bir issue ile ilgili yardımcı olabilecekseniz issue sahibi ile iletişime geçebilirsiniz.
 - Üzerinizdeki görevi(issue) bırakmanız gerekirse lütfen topluluğa ilgili Gitter kanalı üzerinden haber veriniz.
 - Teknik terimlerin çevirisinde bir bütünlük sağlamak amacı ile bir [sözlük](GLOSSARY.md) oluşturulmaktadır. Lütfen çevirinizi yaparken ve bir Pull Request'i incelerken bu sözlükte yer alan terimleri takip ediniz. 
 - Diğer görüş ve önerileriniz için gitter kanalına bekleriz. https://gitter.im/codefiction/typescript-book
