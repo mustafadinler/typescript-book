@@ -18,6 +18,8 @@ Fakat bazı terimlerin Türkçe çevrimi, cümleyi anlamsız bir hale getirebilm
 | Contributor | Katkıda bulunan kişi |
 | Object | Nesne |
 | Event | Olay |
+| String | Karakter dizimi |
+| Escape character (`\`) | Kaçış karakteri |
 
 # Terim açıklamaları
 * Duck Typing: Eğer bir ördek gibi yürüyor ve bir ördek gibi "vak"lıyorsa, o zaman bu bir ördektir. Bir nesne yapısal olarak tüm üyelere sahipse, diğer şeylerin de (ne olduğu önemli değil) var olduğu kabul edilir.
