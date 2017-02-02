@@ -1,12 +1,12 @@
-## Generators
+## Oluşturucular
 
-> NOTE: You cannot use generators in TypeScript in a meaningful way (the ES5 emitter is in progress). However that will change soon so we still have this chapter.
+> NOT: TypeScript'te oluşturucular henüz olgunlaşmamıştır. Yine de olgunlaştırma çalışmaları olduğundan bu konuyu ekledik.  
 
-`function *` is the syntax used to create a *generator function*. Calling a generator function returns a *generator object*. There are two key motivations behind generator functions. The generator object just follows the [iterator][iterator] interface (i.e. the `next`, `return` and `throw` functions).
+TypeScript'te `function *` deyimi kullanılarak bir *oluşturucu fonksiyon* tanımlanabilir. Oluşturucu fonksiyonun geridönüşü bir *oluşturucu nesne*dir ve [yineleyici][iterator] arayüzünü uygulamaktadır. Bu bağlamda `next`, `return` ve `throw` çağırımlarına uygundur. Oluşturucu fonksiyonlar iki temel amaca sahiptir.
 
-### Lazy Iterators
+### Geç Yineleyiciler
 
-Generator functions can be used to create lazy iterators e.g. the following function returns an **infinite** list of integers on demand:
+Aşağıda **sonsuz** sayıda tamsayı dönen fonksiyon örneğindeki gibi, oluşturucu fonksiyonlar geç yineleyicileri tanımlamak için kullanılabilir.  
 
 ```ts
 function* infiniteSequence() {
@@ -18,11 +18,11 @@ function* infiniteSequence() {
 
 var iterator = infiniteSequence();
 while (true) {
-    console.log(iterator.next()); // { value: xxxx, done: false } forever and ever
+    console.log(iterator.next()); // { value: xxxx, done: false } - işlem sonsuza kadar devam eder
 }
 ```
 
-of course if the iterator does end, you get the result of `{done:true}` as demonstrated below:
+ancak yineleyicinin bir sonu olduğu koşulda aşağıda gözlemleyebileceğiniz şekilde `{done:true}` sonucu alınabilir:
 
 ```ts
 function* idMaker(){
@@ -39,10 +39,12 @@ console.log(gen.next()); // { value: 2, done: false }
 console.log(gen.next()); // { done: true }
 ```
 
-### Externally Controlled Execution
-This is the part of generators that is truly exciting. It essentially allows a function to pause its execution and pass control (fate) of the remainder of the function execution to the caller.
+### Dışarıdan Kontrol Edilen Yürütmeler
+Yürütülen bir fonksiyonu duraklatmak ve kalan yürütme işinin kontrolünü o fonksiyonu çağırana iletmek oluşturucuların temel işlevidir. 
+Bu, oluşturucuların keyifli ve heyecan verici yanıdır.
 
-A generator function does not execute when you call it. It just creates a generator object. Consider the following example along with a sample execution:
+Oluşturucu fonksiyonlar çağırıldıkları anda yürütülmezler, yalnızca nesne oluştururlar.
+Aşağıdaki örneği ve örnek çağırımı inceleyelim:
 
 ```ts
 function* generator(){
@@ -53,14 +55,14 @@ function* generator(){
     console.log('Execution resumed');
 }
 
-var iterator = generator();
-console.log('Starting iteration'); // This will execute before anything in the generator function body executes
+var iterator = generator(); // Oluşturucu nesnesi
+console.log('Starting iteration'); // Oluşturucu fonksiyonun içeriğinden önce bu satır çalışacaktır.
 console.log(iterator.next()); // { value: 0, done: false }
 console.log(iterator.next()); // { value: 1, done: false }
 console.log(iterator.next()); // { value: undefined, done: true }
 ```
 
-If you run this you get the following output:
+Örneğin çalıştırılması durumunda aşağıdaki çıktı gözlemlenebilir:
 
 ```
 $ node outside.js
@@ -73,18 +75,19 @@ Execution resumed
 { value: undefined, done: true }
 ```
 
-* The function only starts execution once `next` is called on the generator object.
-* The function *pauses* as soon as a `yield` statement is encountered
-* The function *resumes* when `next` is called.
+* Oluşturucu fonksiyon (`generator()`) ancak oluşturucu nesnesindeki `next` fonksiyonunun çağırımıyla yürütülmeye başlar.  
+* Oluşturucu fonksiyon `yield` deyimi ile *duraklatılır* *(pause)*.
+* Oluşturucu fonksiyon `next` çağırımı yapıldığında yürütülmeye *devam eder* *(resume)*.
 
-> So essentially the execution of the generator function is controllable by the generator object.
+> Oluşturucu fonksiyonun yürütülmesi, oluşturucu nesne tarafından kontrol edilebilir durumdadır.
 
-Our communication using the generator has been mostly one way with the generator returning values for the iterator. One extremely powerful feature of generators in JavaScript is that they allow two way communications!
+Oluşturucuları çoğu zaman *tek yönlü* olarak, yani sadece yineleyiciden geri döndürülen değerleri için kullanırız.
+Ancak JavaScript'in gerçeklen güçlü bu ozelliği aslında *iki yönlü* olarak kullanıma olanak verir.
 
-* you can control the resulting value of the `yield` expression using `iterator.next(valueToInject)`
-* you can throw an exception at the point of the `yield` expression using `iterator.throw(error)`
+* `iterator.next(valueToInject)` kullanılarak `yield` ile döndürülen değer kontrol edilebilir veya değiştirilebilir.
+* `iterator.throw(error)` kullanılarak `yield` işleyişinde istisna oluşturulabilir.
 
-The following example demonstrates `iterator.next(valueToInject)`:
+`iterator.next(valueToInject)` örneği:
 
 ```ts
 function* generator() {
@@ -93,14 +96,14 @@ function* generator() {
 }
 
 const iterator = generator();
-// Start execution till we get first yield value
+// yield'dan dönen ilk değeri alana kadar yürütmeyi başlat
 const foo = iterator.next();
 console.log(foo.value); // foo
-// Resume execution injecting bar
+// bar değerini işleme alarak yürütmeye devam et
 const nextThing = iterator.next('bar');
 ```
 
-The following example demonstrates `iterator.throw(error)`:
+`iterator.throw(error)` örneği:
 
 ```ts
 function* generator() {
@@ -113,19 +116,19 @@ function* generator() {
 }
 
 var iterator = generator();
-// Start execution till we get first yield value
+// yield'dan dönen ilk değeri alana kadar yürütmeyi başlat
 var foo = iterator.next();
 console.log(foo.value); // foo
-// Resume execution throwing an exception 'bar'
+// 'bar' mesajıyla bir istisna oluşturarak yürütmeye devam et
 var nextThing = iterator.throw(new Error('bar'));
 ```
 
-So here is the summary:
-* `yield` allows a generator function to pause its communication and pass control to an external system
-* the external system can push a value into the generator function body
-* the external system can throw an exception into the generator function body
+Özetleyecek olursak:
+* `yield` deyimi bir oluşturucu fonksiyonun işleyişini duraksatarak, yürütme kontrolünü dış yapıya iletir.
+* oluşturucu fonksiyonlardaki değerler dışarıdan manipüle edilebilir. 
+* oluşturucu fonksiyonların işleyişleri istisnalara ve hatalara göre şekillendirilebilir.
 
-How is this useful? Jump to the next section [**async/await**][async-await] and find out.
+Bu konuyla ilgili olarak bir sonraki bölüm olan [**async/await**][async-await] konusuna bir göz atın.
 
 [iterator]:./iterators.md
 [async-await]:./async-await.md
