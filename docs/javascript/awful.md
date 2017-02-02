@@ -44,7 +44,7 @@ function foo() {
   console.log(this);
 }
 
-foo(); // global olarak çıktı verir örneğin tarayıcılardaki `window` 
+foo(); // global olarak çıktı verir, örneğin tarayıcılardaki `window` 
 let bar = {
   foo
 }

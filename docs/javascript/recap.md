@@ -23,14 +23,14 @@ TypeScript sizi hiç çalışmamış JavaScript parçalarından korumaya çalı�
 // - çalışma zamanı hatası vermez (hata ayıklamayı zorlaştırıyor)
 // - ama TypeScript derleme zamanı hatası verecek (hata ayıklamayı gereksizleştiriyor)
 //
-{} + []; // JS : 0, TS Hata
-[] + {}; // JS : "[object Object]", TS Hata
-{} + {}; // JS : NaN, TS Hata
-"merhaba" - 1; // JS : NaN, TS Hata
+{} + []; // JS : 0, TS Error
+[] + {}; // JS : "[object Object]", TS Error
+{} + {}; // JS : NaN, TS Error
+"merhaba" - 1; // JS : NaN, TS Error
 
 function ekle(a,b) {
   return
-    a + b; // JS : undefined, TS Hata 'unreachable code detected'
+    a + b; // JS : undefined, TS Error 'unreachable code detected'
 }
 ```
 
