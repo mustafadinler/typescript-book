@@ -55,7 +55,7 @@ let iteratorResult5 = frame.next(); //{ done: true }
 let component = iteratorResult1.value; //Component { name: 'top' }
 ```
 
-Tekrar belirtmek gerekirse yineleyici bir TypeScript özelliği değildir.  Bu kod Iterator ve IteratorResult arayüzlerini açıkça uygulamadan da çalışabilir.
+Tekrar belirtmek gerekirse yineleyici bir TypeScript özelliği değildir. Bu kod Iterator ve IteratorResult arayüzleri kullanılmadan da çalışabilir.
 
 Ancak, kod tutarlılığı için, bu ortak ES6 arayüzlerini (./types/interfaces.md) kullanmak çok yararlı olacaktır.
 
