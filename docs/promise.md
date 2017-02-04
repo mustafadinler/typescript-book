@@ -218,9 +218,9 @@ promise.catch((err) => {
 * Quickly creating an already rejected promise : `Promise.reject(error)`
 
 ### Promise'lerin zincirlenebilmesi
-The chain-ability of promises **is the heart of the benefit that promises provide**. Once you have a promise, from that point on, you use the `then` function to create a chain of promises.
+Promise'lerin zincirlenebilir olması **en önemli özelliğidir**. Bir Promise'iniz olduğunda, `then` fonksiyonunu kullanarak promise zinciri yaratabilirsiniz.
 
-* If you return a promise from any function in the chain, `.then` is only called once the value is resolved
+* Zincirdeki herhangi bir fonksiyondan bir promise döndürürseniz, `.then` sadece fonksiyon çözümlendiğinde çağırılır.
 
 ```ts
 Promise.resolve(123)
@@ -230,10 +230,10 @@ Promise.resolve(123)
     })
     .then((res) => {
         console.log(res); // 456
-        return Promise.resolve(123); // Notice that we are returning a Promise
+        return Promise.resolve(123); // Bir promise dmndürüyor olduğumuza dikkat edin
     })
     .then((res) => {
-        console.log(res); // 123 : Notice that this `then` is called with the resolved value
+        console.log(res); // Bu `then`'in çözümlenmiş değer ile çağırıldığına dikkat edin.   
         return 123;
     })
 ```
@@ -241,36 +241,36 @@ Promise.resolve(123)
 * you can aggregate the error handling of any preceding portion of the chain with a single `catch`
 
 ```ts
-// Create a rejected promise
-Promise.reject(new Error('something bad happened'))
+// Reddedilen bir promise yaratın
+Promise.reject(new Error('kötü bir şey oldu'))
     .then((res) => {
-        console.log(res); // not called
+        console.log(res); // çağırılmadı
         return 456;
     })
     .then((res) => {
-        console.log(res); // not called
+        console.log(res); // çağırılmadı
         return 123;
     })
     .then((res) => {
-        console.log(res); // not called
+        console.log(res); // çağırılmadı
         return 123;
     })
     .catch((err) => {
-        console.log(err.message); // something bad happened
+        console.log(err.message); // kötü bir şey oldu
     });
 ```
 
-* the `catch` actually returns a new promise (effectively creating a new promise chain):
+* `catch` yeni bir promise döndürür(yeni bir promise zinciri yaratarak)
 
 ```ts
-// Create a rejected promise
-Promise.reject(new Error('something bad happened'))
+// Reddedilecek bir promise yaratalım
+Promise.reject(new Error('kötü bir şey oldu'))
     .then((res) => {
-        console.log(res); // not called
+        console.log(res); // çağırılmadı
         return 456;
     })
     .catch((err) => {
-        console.log(err.message); // something bad happened
+        console.log(err.message); // kötü bir şey oldu
         return 123;
     })
     .then((res) => {
@@ -278,20 +278,20 @@ Promise.reject(new Error('something bad happened'))
     })
 ```
 
-* Any synchronous errors thrown in a `then` (or `catch`) result in the returned promise to fail
+* Bir `then` (ya da `catch`) fonksiyonunda gerçekleşen herhangi bir asenkron hata, döndürülen promise'in fail olmasına sebep olur.
 
 ```ts
 Promise.resolve(123)
     .then((res) => {
-        throw new Error('something bad happened'); // throw a synchronous error
+        throw new Error('kötü bir şey oldu'); // asenkron bir hata fırlatalım
         return 456;
     })
     .then((res) => {
-        console.log(res); // never called
+        console.log(res); // hiç çağırılmadı
         return Promise.resolve(789);
     })
     .catch((err) => {
-        console.log(err.message); // something bad happened
+        console.log(err.message); // kötü bir şey oldu
     })
 ```
 
@@ -303,8 +303,8 @@ The fact that:
 effectively provides us with an async programming paradigm that allows better error handling than raw callbacks. More on this below.
 
 
-### TypeScript and promises
-The great thing about TypeScript is that it understands the flow of values through a promise chain.
+### TypeScript ve Promise'ler
+Typescript ile ilgili harika olan şey, bir promise chain içerisinde gerçekleşen değer akışını anlayabilmesidir.
 
 ```ts
 Promise.resolve(123)
