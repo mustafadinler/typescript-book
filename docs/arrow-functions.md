@@ -1,12 +1,12 @@
 * [Ok Fonksiyonları](#arrow-functions)
-* [Tüyo: Ok Fonksiyonu Gereksinimi](#tip-arrow-function-need)
-* [Tüyo: Tehlikeli Ok Fonksiyonu Kullanımı](#tip-arrow-function-danger)
-* [Tüyo: `this` kullanan kütüphaneler](#tip-arrow-functions-with-libraries-that-use-this)
-* [Tüyo: Arrow Function Kalıtımı](#tip-arrow-functions-and-inheritance)
+* [İpucu: Ok Fonksiyonu Gereksinimi](#tip-arrow-function-need)
+* [İpucu: Tehlikeli Ok Fonksiyonu Kullanımı](#tip-arrow-function-danger)
+* [İpucu: `this` kullanan kütüphaneler](#tip-arrow-functions-with-libraries-that-use-this)
+* [İpucu: Arrow Function Kalıtımı](#tip-arrow-functions-and-inheritance)
 
 ### Ok Fonksiyonları
 
-*Kalın ok* (çünkü `->` ince ok, `=>` ise kalın oktur) veya *lambda fonksiyonu* (diğer dillerde geçtiği şekliyle) olarak isimlendirilir. `()=>something`, kalın ok fonksiyonunun çokça kullanılan bir özelliğidir. Kalın ok fonksiyonunun kullanılmasının nedenleri:
+*Kalın ok* (çünkü `->` ince ok (thin arrow), `=>` ise kalın oktur (fat arrow)) veya *lambda fonksiyonu* (diğer dillerde geçtiği şekliyle) olarak isimlendirilir. `()=>something`, kalın ok fonksiyonunun çokça kullanılan bir özelliğidir. Kalın ok fonksiyonunun kullanılmasının nedenleri:
 1. `function` yazmanıza gerek olmaz.
 2. Anlam olarak `this` sözcüğünü içerir.
 3. Anlam olarak `arguments` sözcüğünü içerir.
@@ -15,7 +15,7 @@
 ```ts
 var inc = (x)=>x+1;
 ```
-`this` geleneksek olarak Javascript'te sıkıntılı bir konudur. Bilge bir adam der ki, "`this`, çok kolay bir biçimde anlamını yitirdiği için Javascript'ten nefret ettim." Kalın ok bu durumu `this`'in anlamını etrafındaki içerikle yansıtarak düzeltti. Şu saf Javascript sınıfına bakarsak:
+`this` genel olarak Javascript'te sıkıntılı bir konudur. Bilge bir adam der ki, "`this`, çok kolay bir biçimde anlamını yitirdiği için Javascript'ten nefret ettim." Kalın ok bu durumu `this`'in anlamını etrafındaki içerikle yansıtarak düzeltti. Şu saf Javascript sınıfına bakarsak:
 
 ```ts
 function Person(age) {
@@ -29,7 +29,7 @@ setTimeout(person.growOld,1000);
 
 setTimeout(function() { console.log(person.age); },2000); // 1, ama 2 olmalıydı
 ```
-Eğer bu kodu tarayıcıda koşturursanız, fonksiyon içindeki `this`, `window`'u işaret eder çünkü `growOld` fonksiyonunu `window` çalıştıracaktır. Bunu düzeltmek için ok fonksiyonu kullanın:
+Eğer bu kodu tarayıcıda çalıştırırsanız, fonksiyon içindeki `this`, `window`'u işaret eder çünkü `growOld` fonksiyonunu `window` yürütecektir. Bunu düzeltmek için ok fonksiyonu kullanın:
 ```ts
 function Person(age) {
     this.age = age;
@@ -70,7 +70,7 @@ setTimeout(person.growOld,1000);
 setTimeout(function() { console.log(person.age); },2000); // 2
 ```
 
-#### Tüyo: Ok Fonksiyonu Gereksinimi
+#### İpucu: Ok Fonksiyonu Gereksinimi
 Kısa ve öz sözdiziminin dışında, sadece fonksiyonunuz başkası tarafından çağrılacaksa, kalın ok kullanmanız *gereklidir*. Örneğin:
 ```ts
 var growOld = person.growOld;
@@ -83,11 +83,11 @@ person.growOld();
 ```
 İşte o zaman `this` doğru bir içeriği çağırmış olur (`person` örneğindeki gibi).
 
-#### Tüyo: Tehlikeli Ok Fonksiyonu Kullanımı
+#### İpucu: Tehlikeli Ok Fonksiyonu Kullanımı
 
 Aslında `this`'i *ilgili içeriği çağırmak için* istiyorsanız, *ok fonksiyonu kullanmamalısınız*. jquery, underscore, mocha gibi geri çağırımlar (callback) kullanan kütüphaneler bu duruma örnektir. Eğer dökümanında fonksiyonlarda `this` kullanımından bahsediyorsa, o zaman kalın ok yerine muhtemelen `function` kullanmanız gerekiyor. Aynı şekilde eğer `arguments` kullanmayı düşünüyorsanız da, kalın ok fonksiyonu kullanmamalısınız.
 
-#### Tüyo: Ok fonksiyonları ve `this` kullanan kütüphaneler
+#### İpucu: Ok fonksiyonları ve `this` kullanan kütüphaneler
 Birçok kütüphane bunu yapmaktadır. Örneğin, `jQuery` yineleyicileri (iterable) (bir örneği http://api.jquery.com/jquery.each/) o an yinelenmekte olan nesneye `this`'i iletecektir. Bu durumda, `this`'i ve çevreleyen içeriğini ileten bir kütüphaneye erişmek istiyorsanız, benzeri bir geçici değişken kullanın: 
 
 ```ts
@@ -98,7 +98,7 @@ something.each(function() {
 });
 ```
 
-#### Tip: Ok fonksiyonları ve kalıtım
+#### İpucu: Ok fonksiyonları ve kalıtım
 
 Ok fonksiyonu ile yazılıp `this` ile devam eden, bir sınıfa ait bir metodunuz var. Sadece tek bir `this` olduğundan,  bu tip fonksiyonlar `super`'i (`super` sadece prototip üyelerinde çalışır) çağıramazlar. Alt sınıf metodun üzerinden geçmeden önce, metodun kopyasını yaratarak bunun üstesinden gelebilirsiniz.
 
