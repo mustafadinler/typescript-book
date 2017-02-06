@@ -9,7 +9,7 @@
 Gerçek şu ki ikisiyle de uğraşmanız gerekecektir. İkisi için de `==` ile kontrol edelim.
 
 ```ts
-/// bar aşagıdakilerden biri iken `foo.bar == undefined` yaptığınızı düşünün:
+/// bar aşağıdakilerden biri iken `foo.bar == undefined` yaptığınızı düşünün:
 console.log(undefined == undefined); // true
 console.log(null == undefined); // true
 console.log(0 == undefined); // false
@@ -20,7 +20,7 @@ Tavsiyem `undefined` veya `null`, ikisi için de `== null` ile kontrol etmelisin
 
 ## undefined
 
-Hatırlarsanız `== null` kullanmanız gerektiğini söylemiştim. Tabii ki kullanacaksınız (çünkü ben öyle söyledim ^). Kök seviyesindeki şeyler için kullanmayın. Katı modda (strict mode) eğer `foo` kullanırsanız ve `foo` tanımlanmamış (undefined) ise, `ReferenceError` **hatası** alırsınız ve tüm çağrı kümeniz bozulur.
+Hatırlarsanız `== null`'u nasıl kullanmanız gerektiğini söylemiştim. Tabii ki kullanacaksınız (çünkü ben öyle söyledim ^). Kök seviyesindeki şeyler için kullanmayın. Katı modda (strict mode) eğer `foo` kullanırsanız ve `foo` tanımlanmamış (undefined) ise, `ReferenceError` **hatası** alırsınız ve tüm çağrı kümeniz bozulur.
 
 > Katı mod (strict mode) kullanmalısınız ... ve aslında TS derleyicisi eğer modül kullanırsanız sizin için bunu ekleyecektir ... daha fazlası kitabın ilerleyen bölümlerinde var yani şu anda açık şekilde anlamış olmanız gerekmez :)
 
@@ -28,7 +28,7 @@ Yani bir değişkenin *global* düzeyde tanımlanıp tanımlanmadığını kontr
 
 ```ts
 if (typeof someglobal !== 'undefined') {
-  // someglobal şu anda kullanım için güvenlidir
+  // someglobal kullanımı şu anda güvenli
   console.log(someglobal);
 }
 ```
