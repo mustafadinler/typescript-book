@@ -1,9 +1,8 @@
-## Async Await
-
-As a thought experiment imagine the following, a way to tell the JavaScript runtime to pause the executing of code on the `await` keyword when used on a promise and resume *only* once (and if) the promise returned from the function is settled.
+## Asenkron Bekleme
+Şöyle bir deney kurguladığımızı farzedelim, Javascript çalışma zamanında `await` anahtar kelimesi bir `promise`(söz) ile birlikte görüldüğü anda çalışmayı duraksayabiliyor ve sadece verilen sözün sonuca ulaşması tamamlandıktan sonra -sadece bir kerelik- çalışmaya kaldığı yerden devam ediyor.
 
 ```ts
-// Not actual code. A thought experiment
+//Aşağıda gördüğünüz gerçek bir kod parçası değildir
 async function foo() {
     try {
         var val = await getMeAPromise();
@@ -13,28 +12,27 @@ async function foo() {
         console.log('Error: ', err.message);
     }
 }
+
 ```
+Verilen söz bir sonuca ulaştığında program çalışmaya devam eder,
+* Eğer verilen söz yerine getirildiyse `await` verilen sözün sonucunu dönecektir,
+* Eğer verilen söz yerine getirilmediyse (reddedildiyse), çalışma zamanında yakalayabileceğimiz bir hata senkron olarak fırlatılacaktır  
 
-When the promise settles execution continues,
-* if it was fulfilled then await will return the value,
-* if it's rejected an error will be thrown synchronously which we can catch.
+Bu yaklaşım asenkron programlamayı bir anda senkron programlama gibi kolay bir hale getiriyor.Bu deney için üç bileşen gereklidir.  
+* *Fonksiyonları duraksatabilme* kabiliyeti.
+* Fonksiyonun içerisine *bir değer koyabilme* kabiliyeti.
+* Fonksiyonun içerisinden *bir istisna fırlatabilme* kabiliyeti.
 
-This suddenly (and magically) makes asynchronous programming as easy as synchronous programming.  Three things are needed for this though experiment are.
+İşte bu saydıklarımız tam olarak *oluşturucular*ın yapmamıza olanak tanıdığı şey. Aslında farzedilen deney bir kurgu değil gerçeğin ta kendisidir ve  Javascript / Typescript dünyasında `asenkron`/`bekle` implementasyonu olarak ifade edilir. Perdenin arkasında oluşturucuları kullanır.
 
-* Ability to *pause function* execution.
-* Ability to *put a value inside* the function.
-* Ability to *throw an exception inside* the function.
 
-This is exactly what generators allowed us to do! The thought experiment *is actually real* and is the `async`/`await` implementation in TypeScript / JavaScript. Under the covers it just uses generators.
-
-### Generated JavaScript
-
-You don't have to understand this, but its fairly simple if you've [read up on generators][generators]. The function `foo` can be simply wrapped up as follows:
+### Oluşturulmuş JavaScript
+Bunu tamamen anlamak zorunda değilsiniz ama [oluşturucuları][generators] okursanız oldukça basit olduğunu göreceksiniz. `foo` fonksiyonu aşağıdaki gibi basit bir şekilde paketlenebilir:
 
 ```ts
-const foo = wrapToReturnPromise(function* () {
+const foo = sozAlmakicinPaketle(function* () {
     try {
-        var val = yield getMeAPromise();
+        var val = yield banaSozVer();
         console.log(val);
     }
     catch(err) {
@@ -42,7 +40,7 @@ const foo = wrapToReturnPromise(function* () {
     }
 })
 ```
+`sozAlmakicinPaketle`'nin `oluşturucuyu` almak için sadece oluşturucu fonksiyonu çağırdığı bir durumda; daha sonra `generator.next()` ifadesi çağırılır, eğer dönen değer bir `söz` ise, `generator.next(result)` veya `generator.throw(error)` ifadelerinden biri duruma göre yakalanarak işlem sonlandırılır. 
 
-where the `wrapToReturnPromise` just executes the generator function to get the `generator` and then use `generator.next()`, if the value is a `promise` it would `then`+`catch` the promise and depending upon the result call `genertor.next(result)` or `genertor.throw(error)`. That's it!
 
 [generators]:./generators.md
