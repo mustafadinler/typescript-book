@@ -1,5 +1,5 @@
 ## Asenkron Bekleme
-Şöyle bir deney kurguladığımızı farzedelim, Javascript çalışma zamanında `await` anahtar kelimesi bir `promise`(söz) ile birlikte görüldüğü anda çalışmayı duraksayabiliyor ve sadece verilen sözün sonuca ulaşması tamamlandıktan sonra -sadece bir kerelik- çalışmaya kaldığı yerden devam ediyor.
+Şöyle bir deney kurguladığımızı varsayalım, Javascript çalışma zamanında `await` anahtar kelimesi bir `promise`(söz) ile birlikte görüldüğü anda kodun çalışması duraksayabilir ve sadece verilen sözün sonuca ulaşması tamamlandıktan sonra -sadece bir kerelik- çalışmaya kaldığı yerden devam eder.
 
 ```ts
 //Aşağıda gördüğünüz gerçek bir kod parçası değildir
@@ -23,7 +23,7 @@ Bu yaklaşım asenkron programlamayı bir anda senkron programlama gibi kolay bi
 * Fonksiyonun içerisine *bir değer koyabilme* kabiliyeti.
 * Fonksiyonun içerisinden *bir istisna fırlatabilme* kabiliyeti.
 
-İşte bu saydıklarımız tam olarak *oluşturucular*ın yapmamıza olanak tanıdığı şey. Aslında farzedilen deney bir kurgu değil gerçeğin ta kendisidir ve  Javascript / Typescript dünyasında `asenkron`/`bekle` implementasyonu olarak ifade edilir. Perdenin arkasında oluşturucuları kullanır.
+İşte bu saydıklarımız tam olarak *oluşturucular*ın yapmamıza olanak tanıdığı şey. Aslında bahsettiğimiz deney bir kurgu değil gerçeğin ta kendisidir ve  Javascript / Typescript dünyasında `asenkron`/`bekle` uyarlaması olarak ifade edilir.Bu uyarlama perdenin arkasında oluşturucuları kullanır.
 
 
 ### Oluşturulmuş JavaScript
@@ -40,7 +40,7 @@ const foo = sozAlmakicinPaketle(function* () {
     }
 })
 ```
-`sozAlmakicinPaketle`'nin `oluşturucuyu` almak için sadece oluşturucu fonksiyonu çağırdığı bir durumda; daha sonra `generator.next()` ifadesi çağırılır, eğer dönen değer bir `söz` ise, `generator.next(result)` veya `generator.throw(error)` ifadelerinden biri duruma göre yakalanarak işlem sonlandırılır. 
+`sozAlmakicinPaketle`'nin `oluşturucuyu` almak için sadece oluşturucu fonksiyonu çağırdığı bir durumda; daha sonra `generator.next()` ifadesi çağırılır, eğer dönen değer bir `söz` ise, `generator.next(result)` veya `generator.throw(error)` ifadelerinden biri duruma göre `then` veya `catch` ile yakalanarak işlem sonlandırılır. 
 
 
 [generators]:./generators.md
