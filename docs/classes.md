@@ -1,10 +1,10 @@
-### Classes
-The reason why it's important to have classes in JavaScript as a first class item is that:
-1. [Classes offer a useful structural abstraction](./tips/classesAreUseful.md)
-1. Provides a consistent way for developers to use classes instead of every framework (emberjs,reactjs etc) coming up with their own version.
-1. Object Oriented Developers already understand classes.
+### Sınıflar
+JavaScript'teki yüksek öncelikli öğeler olan sınıflara sahip olmak şu nedenlerden ötürü önemlidir:
+1. [Sınıflar, soyutlama için faydalı bir yapı sunarlar.](./tips/classesAreUseful.md)
+2. Geliştiricilere, kendi sürümleriyle gelen frameworkler (emberjs,reactjs etc) yerine, sınıfları kullanabilmeleri için tutarlı bir yöntem sağlar. 
+3. Nesneye yönelik geliştiriciler halihazırda sınıf kavramına aşinalar.
 
-Finally JavaScript developers can *have `class`*. Here we have a basic class called Point:
+Sonunda JavaScript geliştiricileri de artık *`class`*'ları kullanabilirler. Point adında basit bir örnek sınıfımız var: 
 ```ts
 class Point {
     x: number;
@@ -22,7 +22,7 @@ var p1 = new Point(0, 10);
 var p2 = new Point(10, 20);
 var p3 = p1.add(p2); // {x:10,y:30}
 ```
-This class generates the following JavaScript on ES5 emit:
+Bu sınıf, ES5'te aşağıdaki gibi bir JavaScript'i üretir:
 ```ts
 var Point = (function () {
     function Point(x, y) {
@@ -37,7 +37,7 @@ var Point = (function () {
 ```
 This is a fairly idiomatic traditional JavaScript class pattern now as a first class language construct.
 
-### Inheritance
+### Kalıtım
 Classes in TypeScript (like other languages) support *single* inheritance using the `extends` keyword as shown below:
 
 ```ts
