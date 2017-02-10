@@ -1,10 +1,10 @@
 ## Promise
 
-Promise, pek çok modern Javascript motorunda bulunan ve rahatlıkla polyfill edilebilen bir sınıftır. Promise'lerin öncelikli amacı Async/Callback tarzı yazılmış koda senkronize stilde hata yakalama fonksiyonunu kazandırmaktır.
+Promise, pek çok modern Javascript motorunda bulunan ve rahatlıkla polyfill edilebilen bir sınıftır. Promise'lerin öncelikli amacı Asenkron/Callback tarzı yazılmış koda senkronize stilde hata yakalama fonksiyonunu kazandırmaktır.
 
 ### Callback tarzı kod
 
-Promise'in sağladığı kolaylıkları daha iyi anlamak için sadece Callback kullanarak Async çalışan bir örnek görelim. Bir JSON dosyasından Async bir şekilde dosya okuma örneğini değerlendirelim. Sync bir versiyonu oldukça kolay olacaktır:
+Promise'in sağladığı kolaylıkları daha iyi anlamak için sadece Callback kullanarak asenkron çalışan bir örnek görelim. Bir JSON dosyasından asenkron bir şekilde dosya okuma örneğini değerlendirelim. Bunun senkronize bir versiyonu oldukça kolay olacaktır:
 
 ```ts
 import fs = require('fs');
@@ -16,7 +16,7 @@ function loadJSONSync(filename: string) {
 // geçerli json dosyası
 console.log(loadJSONSync('good.json'));
 
-// var olmayan json dosyası. bu yüzden fs.readFilesync hata verir
+// var olmayan json dosyası. Bu yüzden fs.readFilesync hata verir
 try {
     console.log(loadJSONSync('absent.json'));
 }
@@ -24,7 +24,7 @@ catch (err) {
     console.log('absent.json error', err.message);
 }
 
-// geçersiz json dosyası. dosya var ama içindeki JSON geçersiz. bu yüzden JSON.parse hata verir
+// geçersiz json dosyası. Dosya var ama içindeki JSON geçersiz. Bu yüzden JSON.parse hata verir.
 try {
     console.log(loadJSONSync('invalid.json'));
 }
@@ -33,7 +33,7 @@ catch (err) {
 }
 ```
 
-Bu basit `loadJSONSync` fonksiyonunun üç davranışı vardır. Geçerli bir dönüş değeri, bir dosya sistemi hatası ya da JSON.parse hatası. Bu hataları diğer Sync çalışan dillerde yaptığımız gibi basit try/catch bloğu ile yakalıyoruz. Şimdi bu fonksiyonun düzgün çalışan bir Async versiyonunu yapalım. Düzgün bir ilk deneme (küçük bir hata yakalama mekanizması ile) aşağıdaki şekilde olacaktır.
+Bu basit `loadJSONSync` fonksiyonunun üç davranışı vardır. Geçerli bir dönüş değeri, bir dosya sistemi hatası ya da JSON.parse hatası. Bu hataları diğer senkronize çalışan dillerde yaptığımız gibi basit try/catch bloğu ile yakalıyoruz. Şimdi bu fonksiyonun düzgün çalışan bir asenkron versiyonunu yapalım. Düzgün bir ilk deneme (küçük bir hata yakalama mekanizması ile) aşağıdaki şekilde olacaktır.
 
 ```ts
 import fs = require('fs');
@@ -47,12 +47,12 @@ function loadJSON(filename: string, cb: (error: Error, data: any) => void) {
 }
 ```
 
-Yeteri kadar basit, bir callback alır, bulduğu dosya sistemi hatalarını callback'e iletir. Eğer dosya sistemi hatası yok ise JSON.parse işleminin sonucunu döndürür. Callback'lere dayalı Async fonksiyonlarla çalışılırken unutulmaması gereken noktalar:
+Yeteri kadar basit, bir callback alır, bulduğu dosya sistemi hatalarını callback'e iletir. Eğer dosya sistemi hatası yok ise JSON.parse işleminin sonucunu döndürür. Callback'lere dayalı asenkron fonksiyonlarla çalışılırken unutulmaması gereken noktalar:
 
 1. Bir callback'i asla iki defa çağırmamak
 2. Asla hata fırlatmamak
 
-Bu basit fonksiyon 2. noktada problem yaşıyor. Aslında eğer geçersiz JSON verilir ise, JSON.parse hata verir, callback hiçbir zaman çağırılmaz ve uygulama çöker. Bu durum aşağıdaki örnekte gösterilmiştir.
+Bu basit fonksiyon 2. noktada problem yaşıyor. Aslında eğer geçersiz JSON verilir ise, JSON.parse hata verir, callback hiçbir zaman çağrılmaz ve uygulama çöker. Bu durum aşağıdaki örnekte gösterilmiştir.
 
 ```ts
 import fs = require('fs');
@@ -102,7 +102,7 @@ loadJSON('invalid.json', function (err, data) {
 });
 ```
 
-Yine de bu kodda yakalaması zor bir hata var. Eğer `JSON.parse` değil de callback(`cb`) hata fırlatırsa, biz bunu `try`/`catch` ile sarmaladığımız için `catch` çalışır ve callback'i bir daha çağırırız. Bu örnekte callback iki defa çağırılır! Bu, aşağıdaki örnekte gösterilmiştir:
+Yine de bu kodda yakalaması zor bir hata var. Eğer `JSON.parse` değil de callback(`cb`) hata fırlatırsa, biz bunu `try`/`catch` ile sarmaladığımız için `catch` çalışır ve callback'i bir daha çağrırız. Bu örnekte callback iki defa çağrılır! Bu, aşağıdaki örnekte gösterilmiştir:
 
 ```ts
 import fs = require('fs');
@@ -123,9 +123,9 @@ function loadJSON(filename: string, cb: (error: Error) => void) {
     });
 }
 
-// düzgün bir dosya ama hatalı bir callback... tekrar çağırılıyor
+// düzgün bir dosya ama hatalı bir callback... tekrar çağrılıyor
 loadJSON('good.json', function (err, data) {
-    console.log('callback çağırıldı');
+    console.log('callback çağrıldı');
 
     if (err) console.log('Error:', err.message);
     else {
@@ -139,8 +139,8 @@ loadJSON('good.json', function (err, data) {
 
 ```bash(konsol)
 $ node asyncbadcatchdemo.js
-callback çağırıldı
-callback çağırıldı
+callback çağrıldı
+callback çağrıldı
 Error: Cannot read property 'bar' of undefined
 ```
 
@@ -194,10 +194,10 @@ const promise = new Promise((resolve, reject) => {
     resolve(123);
 });
 promise.then((res) => {
-    console.log('I get called:', res === 123); // Ben çağırıldım. Sonuç: true
+    console.log('I get called:', res === 123); // Ben çağrıldım. Sonuç: true
 });
 promise.catch((err) => {
-    // Burası hiç çağırılmadı
+    // Burası hiç çağrılmadı
 });
 ```
 
@@ -206,10 +206,10 @@ const promise = new Promise((resolve, reject) => {
     reject(new Error("Çok kötü bir şey oldu."));
 });
 promise.then((res) => {
-    // Burası hiç çağırılmadı
+    // Burası hiç çağrılmadı
 });
 promise.catch((err) => {
-    console.log('Çağırıldım :', err.message); // Çağırıldım : "Çok kötü bir şey oldu"
+    console.log('çağrıldım :', err.message); // çağrıldım : "Çok kötü bir şey oldu"
 });
 ```
 
@@ -220,7 +220,7 @@ promise.catch((err) => {
 ### Promise'lerin zincirlenebilmesi
 Promise'lerin zincirlenebilir olması **en önemli özelliğidir**. Bir Promise'iniz olduğunda, `then` fonksiyonunu kullanarak promise zinciri yaratabilirsiniz.
 
-* Zincirdeki herhangi bir fonksiyondan bir promise döndürürseniz, `.then` sadece fonksiyon çözümlendiğinde çağırılır.
+* Zincirdeki herhangi bir fonksiyondan bir promise döndürürseniz, `.then` sadece fonksiyon çözümlendiğinde çağrılır.
 
 ```ts
 Promise.resolve(123)
@@ -233,7 +233,7 @@ Promise.resolve(123)
         return Promise.resolve(123); // Bir promise döndürüyor olduğumuza dikkat edin
     })
     .then((res) => {
-        console.log(res); // Bu `then`'in çözümlenmiş değer ile çağırıldığına dikkat edin.   
+        console.log(res); // Bu `then`'in çözümlenmiş değer ile çağrıldığına dikkat edin.   
         return 123;
     })
 ```
@@ -244,15 +244,15 @@ Promise.resolve(123)
 // Reddedilen bir promise yaratın
 Promise.reject(new Error('kötü bir şey oldu'))
     .then((res) => {
-        console.log(res); // çağırılmadı
+        console.log(res); // çağrılmadı
         return 456;
     })
     .then((res) => {
-        console.log(res); // çağırılmadı
+        console.log(res); // çağrılmadı
         return 123;
     })
     .then((res) => {
-        console.log(res); // çağırılmadı
+        console.log(res); // çağrılmadı
         return 123;
     })
     .catch((err) => {
@@ -266,7 +266,7 @@ Promise.reject(new Error('kötü bir şey oldu'))
 // Reddedilecek bir promise yaratalım
 Promise.reject(new Error('kötü bir şey oldu'))
     .then((res) => {
-        console.log(res); // çağırılmadı
+        console.log(res); // çağrılmadı
         return 456;
     })
     .catch((err) => {
@@ -287,7 +287,7 @@ Promise.resolve(123)
         return 456;
     })
     .then((res) => {
-        console.log(res); // hiç çağırılmadı
+        console.log(res); // hiç çağrılmadı
         return Promise.resolve(789);
     })
     .catch((err) => {
@@ -342,7 +342,7 @@ Promise.resolve(123)
 
 ### Callback tarzı yazılmış bir fonksiyonu Promise döndüren bir fonksiyona çevirmek
 
-Fonksiyon çağırımını bir promise ile sarmalayın ve
+Fonksiyon çağrımını bir promise ile sarmalayın ve
 - herhangi bir hata olursa `reject`,
 - olmazsa `resolve` döndürün.
 
@@ -363,7 +363,7 @@ function readFileAsync(filename:string):Promise<any> {
 
 ### JSON örneğine geri dönüş
 
-Şimdi `loadJSON` örneğimize geri dönelim ve promise'leri kullanan async bir versiyonunu yazalım. Yapmamız gereken tek şey dosya içeriğini bir promise olarak okumak ve okuma bittiğinde JSON olarak parse etmek. Bu, aşağıdaki örnekte gösterilmiştir:
+Şimdi `loadJSON` örneğimize geri dönelim ve promise'leri kullanan asenkron bir versiyonunu yazalım. Yapmamız gereken tek şey dosya içeriğini bir promise olarak okumak ve okuma bittiğinde JSON olarak parse etmek. Bu, aşağıdaki örnekte gösterilmiştir:
 
 ```ts
 function loadJSONAsync(filename: string): Promise<any> {
@@ -374,20 +374,20 @@ function loadJSONAsync(filename: string): Promise<any> {
 }
 ```
 
-Kullanım (bu bölümün başında yapmış olduğumuz `sync` versiyona ne kadar benzediğine dikkat edin 🌹):
+Kullanım (bu bölümün başında yapmış olduğumuz `senkronize` versiyona ne kadar benzediğine dikkat edin 🌹):
 ```ts
 // geçerli json dosyası
 loadJSONAsync('good.json')
     .then(function (val) { console.log(val); })
     .catch(function (err) {
-        console.log('good.json error', err.message); // hiç çağırılmadı
+        console.log('good.json error', err.message); // hiç çağrılmadı
     })
 
 // var olmayan json dosyası
     .then(function () {
         return loadJSONAsync('absent.json');
     })
-    .then(function (val) { console.log(val); }) // hiç çağırılmadı
+    .then(function (val) { console.log(val); }) // hiç çağrılmadı
     .catch(function (err) {
         console.log('absent.json error', err.message);
     })
@@ -396,21 +396,21 @@ loadJSONAsync('good.json')
     .then(function () {
         return loadJSONAsync('invalid.json');
     })
-    .then(function (val) { console.log(val); }) // hiç çağırılmadı
+    .then(function (val) { console.log(val); }) // hiç çağrılmadı
     .catch(function (err) {
         console.log('bad.json error', err.message);
     });
 ```
 
-Bu fonksiyonun daha basit olmasının sebebi "`loadFile`(async) + `JSON.parse` (sync) => `catch`" kısmının promise zinciri tarafından üstlenmilmiş olmasıdır. Ayrıca callback *bizim tarafımızdan değil*, promise zinciri tarafından çağırıldığı için `try/catch` bloğu ile sarmalama hatasına düşmemiş olduk.
+Bu fonksiyonun daha basit olmasının sebebi "`loadFile`(async) + `JSON.parse` (sync) => `catch`" kısmının promise zinciri tarafından üstlenmilmiş olmasıdır. Ayrıca callback *bizim tarafımızdan değil*, promise zinciri tarafından çağrıldığı için `try/catch` bloğu ile sarmalama hatasına düşmemiş olduk.
 
 ### Paralel akış kontrolü
-Promise kullanarak asenkron işler yapmanın ne kadar kolay olduğunu gördük. Aslında bu sadece `then` çağırımlarını birbirine bağlamaktan ibaretti.
+Promise kullanarak asenkron işler yapmanın ne kadar kolay olduğunu gördük. Aslında bu sadece `then` çağrımlarını birbirine bağlamaktan ibaretti.
 
 Yine de birden fazla asenkron işi gerçekleştirip aldığınız sonuçla başka bir iş yapmak isteyebilirsiniz. `Promise`, vermiş olduğunuz `n` sayıdaki promise'in tamamlanmasını bekleyip, toplam sonucu döndüren statik bir `Promise.all` fonksiyonuna sahiptir. Bu fonksiyona `n` sayıda promise içeren bir dizi verirsiniz ve bu fonksiyon da size `n` sayıda çözümlenmiş sonuç döndürür. Aşağıda paralel'in yanı sıra zincirlemeyi de gösteriyoruz:
 
 ```ts
-// bir sunucudan, bir nesnenin yüklenmesini simüle eden asenkton bir fonksiyon
+// bir sunucudan, bir nesnenin yüklenmesini simüle eden asenkron bir fonksiyon
 function loadItem(id: number): Promise<{id: number}> {
     return new Promise((resolve)=>{
         console.log('loading item', id);
