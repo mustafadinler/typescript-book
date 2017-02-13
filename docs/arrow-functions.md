@@ -2,7 +2,7 @@
 * [İpucu: Ok Fonksiyonu Gereksinimi](#İpucu-ok-fonksiyonu-gereksinimi)
 * [İpucu: Tehlikeli Ok Fonksiyonu Kullanımı](#İpucu-tehlikeli-ok-fonksiyonu-kullanımı)
 * [İpucu: `this` kullanan kütüphaneler](#İpucu-ok-fonksiyonları-ve-this-kullanan-kütüphaneler)
-* [İpucu: Arrow Function Kalıtımı](#İpucu-ok-fonksiyonları-ve-kalıtım)
+* [İpucu: Ok Fonksiyonu Kalıtımı](#İpucu-ok-fonksiyonları-ve-kalıtım)
 
 ### Ok Fonksiyonları
 
