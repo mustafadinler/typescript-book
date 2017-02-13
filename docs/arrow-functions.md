@@ -1,8 +1,8 @@
-* [Ok Fonksiyonları](#arrow-functions)
-* [İpucu: Ok Fonksiyonu Gereksinimi](#tip-arrow-function-need)
-* [İpucu: Tehlikeli Ok Fonksiyonu Kullanımı](#tip-arrow-function-danger)
-* [İpucu: `this` kullanan kütüphaneler](#tip-arrow-functions-with-libraries-that-use-this)
-* [İpucu: Arrow Function Kalıtımı](#tip-arrow-functions-and-inheritance)
+* [Ok Fonksiyonları](#ok-fonksiyonları)
+* [İpucu: Ok Fonksiyonu Gereksinimi](#İpucu-ok-fonksiyonu-gereksinimi)
+* [İpucu: Tehlikeli Ok Fonksiyonu Kullanımı](#İpucu-tehlikeli-ok-fonksiyonu-kullanımı)
+* [İpucu: `this` kullanan kütüphaneler](#İpucu-ok-fonksiyonları-ve-this-kullanan-kütüphaneler)
+* [İpucu: Arrow Function Kalıtımı](#İpucu-ok-fonksiyonları-ve-kalıtım)
 
 ### Ok Fonksiyonları
 
