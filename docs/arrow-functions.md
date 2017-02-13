@@ -1,21 +1,21 @@
-* [Arrow Functions](#arrow-functions)
-* [Tip: Arrow Function Need](#tip-arrow-function-need)
-* [Tip: Arrow Function Danger](#tip-arrow-function-danger)
-* [Tip: Libraries that use `this`](#tip-arrow-functions-with-libraries-that-use-this)
-* [Tip: Arrow Function inheritance](#tip-arrow-functions-and-inheritance)
+* [Ok Fonksiyonları](#arrow-functions)
+* [İpucu: Ok Fonksiyonu Gereksinimi](#tip-arrow-function-need)
+* [İpucu: Tehlikeli Ok Fonksiyonu Kullanımı](#tip-arrow-function-danger)
+* [İpucu: `this` kullanan kütüphaneler](#tip-arrow-functions-with-libraries-that-use-this)
+* [İpucu: Arrow Function Kalıtımı](#tip-arrow-functions-and-inheritance)
 
-### Arrow Functions
+### Ok Fonksiyonları
 
-Lovingly called the *fat arrow* (because `->` is a thin arrow and `=>` is a fat arrow) and also called a *lambda function* (because of other languages). Another commonly used feature is the fat arrow function `()=>something`. The motivation for a *fat arrow* is:
-1. You don't need to keep typing `function`
-2. It lexically captures the meaning of `this`
-2. It lexically captures the meaning of `arguments`
+*Kalın ok* (çünkü `->` ince ok (thin arrow), `=>` ise kalın oktur (fat arrow)) veya *lambda fonksiyonu* (diğer dillerde geçtiği şekliyle) olarak isimlendirilir. `()=>something`, kalın ok fonksiyonunun çokça kullanılan bir özelliğidir. Kalın ok fonksiyonunun kullanılmasının nedenleri:
+1. `function` yazmanıza gerek olmaz.
+2. Anlam olarak `this` sözcüğünü içerir.
+3. Anlam olarak `arguments` sözcüğünü içerir.
 
-For a language that claims to be functional, in JavaScript you tend to be typing `function` quite a lot. The fat arrow makes it simple for you to create a function
+İşlevsel (fonksiyonel) olduğunu iddia eden bir dil olarak JavaScript'te fazlasıyla `function` yazma eğiliminde olursunuz. Kalın ok size kolay bir şekilde fonksiyon yaratmanızı sağlar.
 ```ts
 var inc = (x)=>x+1;
 ```
-`this` has traditionally been a pain point in JavaScript. As a wise man once said "I hate JavaScript as it tends to lose the meaning of `this` all too easily". Fat arrows fix it by capturing the meaning of `this` from the surrounding context. Consider this pure JavaScript class:
+`this` genel olarak Javascript'te sıkıntılı bir konudur. Bilge bir adam der ki, "`this`, çok kolay bir biçimde anlamını yitirdiği için Javascript'ten nefret ettim." Kalın ok bu durumu `this`'in anlamını etrafındaki içerikle yansıtarak düzeltti. Şu saf Javascript sınıfına bakarsak:
 
 ```ts
 function Person(age) {
@@ -27,9 +27,9 @@ function Person(age) {
 var person = new Person(1);
 setTimeout(person.growOld,1000);
 
-setTimeout(function() { console.log(person.age); },2000); // 1, should have been 2
+setTimeout(function() { console.log(person.age); },2000); // 1, ama 2 olmalıydı
 ```
-If you run this code in the browser `this` within the function is going to point to `window` because `window` is going to be what executes the `growOld` function. Fix is to use an arrow function:
+Eğer bu kodu tarayıcıda çalıştırırsanız, fonksiyon içindeki `this`, `window`'u işaret eder çünkü `growOld` fonksiyonunu `window` yürütecektir. Bunu düzeltmek için ok fonksiyonu kullanın:
 ```ts
 function Person(age) {
     this.age = age;
@@ -42,13 +42,13 @@ setTimeout(person.growOld,1000);
 
 setTimeout(function() { console.log(person.age); },2000); // 2
 ```
-The reason why this works is the reference to `this` is captured by the arrow function from outside the function body. This is equivalent to the following JavaScript code (which is what you would write yourself if you didn't have TypeScript):
+Bunun işe yaramasının sebebi, ok fonksiyonunun `this` referansını fonksiyon gövdesinin dışından almasıdır. Buna eşdeğer Javascript kodu (TypeScript kullanmadan da yazabilirsiniz) ise aşağıdaki gibidir:
 ```ts
 function Person(age) {
     this.age = age;
-    var _this = this;  // capture this
+    var _this = this;  // this'i referans alır
     this.growOld = function() {
-        _this.age++;   // use the captured this
+        _this.age++;   // referans alınan this kullanılır
     }
 }
 var person = new Person(1);
@@ -56,7 +56,7 @@ setTimeout(person.growOld,1000);
 
 setTimeout(function() { console.log(person.age); },2000); // 2
 ```
-Note that since you are using TypeScript you can be even sweeter in syntax and combine arrows with classes:
+Ayrıca artık TypeScript kullandığınız için, daha güzel bir sözdizimi ile ok fonksiyonlarını sınıflar ile kullanabilirsiniz: 
 ```ts
 class Person {
     constructor(public age:number) {}
@@ -70,51 +70,51 @@ setTimeout(person.growOld,1000);
 setTimeout(function() { console.log(person.age); },2000); // 2
 ```
 
-#### Tip: Arrow Function Need
-Beyond the terse syntax, you only *need* to use the fat arrow if you are going to give the function to someone else to call. Effectively:
+#### İpucu: Ok Fonksiyonu Gereksinimi
+Kısa ve öz sözdiziminin dışında, sadece fonksiyonunuz başkası tarafından çağrılacaksa, kalın ok kullanmanız *gereklidir*. Örneğin:
 ```ts
 var growOld = person.growOld;
-// Then later someone else calls it:
+// Ve sonra başkası çağırdığında:
 growOld();
 ```
-If you are going to call it yourself, i.e.
+Eğer fonksiyonu kendiniz çağıracaksanız, örneğin;
 ```ts
 person.growOld();
 ```
-then `this` is going to be the correct calling context (in this example `person`).
+İşte o zaman `this` doğru bir içeriği çağırmış olur (`person` örneğindeki gibi).
 
-#### Tip: Arrow Function Danger
+#### İpucu: Tehlikeli Ok Fonksiyonu Kullanımı
 
-In fact if you want `this` *to be the calling context* you should *not use the arrow function*. This is the case with callbacks used by libraries like jquery, underscore, mocha and others. If the documentation mentions functions on `this` then you should probably just use a `function` instead of a fat arrow. Similarly if you plan to use `arguments` don't use an arrow function.
+Aslında `this`'i *ilgili içeriği çağırmak için* istiyorsanız, *ok fonksiyonu kullanmamalısınız*. jquery, underscore, mocha gibi geri çağırımlar (callback) kullanan kütüphaneler bu duruma örnektir. Eğer dökümanında fonksiyonlarda `this` kullanımından bahsediyorsa, o zaman kalın ok yerine muhtemelen `function` kullanmanız gerekiyor. Aynı şekilde eğer `arguments` kullanmayı düşünüyorsanız da, kalın ok fonksiyonu kullanmamalısınız.
 
-#### Tip: Arrow functions with libraries that use `this`
-Many libraries do this e.g. `jQuery` iterables (one example http://api.jquery.com/jquery.each/) will use `this` to pass you the object that it is currently iterating over. In this case if you want to access the library passed `this` as well as the surrounding context just use a temp variable like `_self` like you would in the absence of arrow functions.
+#### İpucu: Ok fonksiyonları ve `this` kullanan kütüphaneler
+Birçok kütüphane bunu yapmaktadır. Örneğin, `jQuery` yineleyicileri (iterable) (bir örneği http://api.jquery.com/jquery.each/) o an yinelenmekte olan nesneye `this`'i iletecektir. Bu durumda, `this`'i ve çevreleyen içeriğini ileten bir kütüphaneye erişmek istiyorsanız, benzeri bir geçici değişken kullanın: 
 
 ```ts
 let _self = this;
 something.each(function() {
-    console.log(_self); // the lexically scoped value
-    console.log(this); // the library passed value
+    console.log(_self); // sözcük anlamı olarak kapsamın değeri
+    console.log(this); // kütüphanenin ilettiği değer
 });
 ```
 
-#### Tip: Arrow functions and inheritance
+#### İpucu: Ok fonksiyonları ve kalıtım
 
-If you have an instance method as an arrow function then it goes on `this`. Since there is only one `this` such functions cannot participate in a call to `super` (`super` only works on prototype members). You can easily get around it by creating a copy of the method before overriding it in the child.
+Diyelim ki ok fonksiyonu ile yazılıp `this` ile devam eden, bir sınıfa ait bir metodunuz var. Sadece tek bir `this` olduğundan,  bu tip fonksiyonlar `super`'i (`super` sadece prototip üyelerinde çalışır) çağıramazlar. Alt sınıf metodun üzerinden geçmeden önce, metodun kopyasını yaratarak bunun üstesinden gelebilirsiniz.
 
 ```ts
 class Adder {
     constructor(public a: number) {}
-    // This function is now safe to pass around
+    // Bu fonksiyon şu an çağrılabilmeye uygun
     add = (b: string): string => {
         return this.a + b;
     }
 }
 
 class ExtendedAdder extends Adder {
-    // Create a copy of parent before creating our own
+    // Kendi metodundan önce üst sınıfınkinin bir kopyasını yarat
     private superAdd = this.add;
-    // Now create our override
+    // Şimdi onun üzerinden geçen kendi metodunu yarat
     add = (b: string): string => {
         return this.superAdd(b);
     }
