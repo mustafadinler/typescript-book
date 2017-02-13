@@ -100,7 +100,7 @@ something.each(function() {
 
 #### İpucu: Ok fonksiyonları ve kalıtım
 
-Ok fonksiyonu ile yazılıp `this` ile devam eden, bir sınıfa ait bir metodunuz var. Sadece tek bir `this` olduğundan,  bu tip fonksiyonlar `super`'i (`super` sadece prototip üyelerinde çalışır) çağıramazlar. Alt sınıf metodun üzerinden geçmeden önce, metodun kopyasını yaratarak bunun üstesinden gelebilirsiniz.
+Diyelim ki ok fonksiyonu ile yazılıp `this` ile devam eden, bir sınıfa ait bir metodunuz var. Sadece tek bir `this` olduğundan,  bu tip fonksiyonlar `super`'i (`super` sadece prototip üyelerinde çalışır) çağıramazlar. Alt sınıf metodun üzerinden geçmeden önce, metodun kopyasını yaratarak bunun üstesinden gelebilirsiniz.
 
 ```ts
 class Adder {
