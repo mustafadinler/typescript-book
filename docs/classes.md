@@ -35,10 +35,10 @@ var Point = (function () {
     return Point;
 })();
 ```
-This is a fairly idiomatic traditional JavaScript class pattern now as a first class language construct.
+Şimdi bu, birinci sınıf dil yapısı olarak yeterince deyimsel bir geleneksel JavaScript sınıfı kalıbıdır.
 
 ### Kalıtım
-Classes in TypeScript (like other languages) support *single* inheritance using the `extends` keyword as shown below:
+Aşağıda gösterildiği gibi, TypeScript'teki sınıflar `extends` anahtar sözcüğü ile *tekil* kalıtımı destekler (diğer diller gibi):
 
 ```ts
 class Point3D extends Point {
@@ -53,12 +53,12 @@ class Point3D extends Point {
     }
 }
 ```
-If you have a constructor in your class then you *must* call the parent constructor from your constructor (TypeScript will point this out to you). This ensures that the stuff that it needs to set on `this` gets set. Followed by the call to `super` you can add any additional stuff you want to do in your constructor (here we add another member `z`).
+Eğer sınıfınızda yapıcı (constructor) metodunuz varsa, yapıcı metodunuzda üst sınıfınızın yapıcı metodunu çağırmak *zorundasınız* (TypeScript bunu size belirtecektir). Bu `this` üzerinde atanması gereken şeylerin atanmasını sağlar. Sonrasında, `super`'in çağırılmasıyla yapıcı metodunuzda yapmak istediğiniz şeyleri ekleyebilirsiniz (Burada `z` adında başka bir eleman ekliyoruz).
 
-Note that you override parent member functions easily (here we override `add`) and still use the functionality of the super class in your members (using `super.` syntax).
+Üst eleman fonksiyonlarını kolayca geçersiz kılabileceğinizi (`add`'i burada geçersiz kılıyoruz) ve hala elemanlarınızdaki üst sınıflarınızın işlevselliklerini kullanabileceğinizi göz önünde bulundurun (`super.` sözdizimi kullanarak).
 
-### Statics
-TypeScript classes support `static` properties that are shared by all instances of the class. A natural place to put (and access) them is on the class itself and that is what TypeScript does:
+### Statikler (Static)
+TypeScript sınıfları, sınıfın tüm örnekleri tarafından paylaşılan `static` özellikleri destekler.Statik özellikleri koymak (ve erişmek) için en doğal yer sınıfın içerisidir ve TypeScript'in yaptığı şey şöyledir:
 
 ```ts
 class Something {
@@ -73,21 +73,21 @@ var s2 = new Something();
 console.log(Something.instances); // 2
 ```
 
-You can have static members as well as static functions.
+Statik fonksiyonlarınız olduğu gibi statik elemanlarınız da olabilir.
 
-### Access Modifiers
-TypeScript supports access modifiers `public`,`private` and `protected` which determine the accessibility of a `class` member as shown below:
+### Erişim Belirleyiciler
+TypeScript, aşağıda gösterildiği gibi bir `sınıf` elemanının erişilebilirliğini belirleyen `public`,`private` and `protected` erişim belirleyicilerini destekler.
 
-| accessible on   | `public` | `protected` | `private` |
+| erişilebilir    | `public` | `protected` | `private` |
 |-----------------|----------|-------------|-----------|
-| class           | yes      | yes         | yes       |
-| class children  | yes      | yes         | no        |
-| class instances | yes      | no          | no        |
+| sınıf           | evet     | evet        | evet      |
+| alt sınıf       | evet     | evet        | hayır     |
+| sınıf örneği    | evet     | hayır       | hayır     |
 
 
-If an access modifier is not specified it is implicitly `public` as that matches the *convenient* nature of JavaScript 🌹.
+Eğer bir erişim belirleyici tanımlanmazsa, o JavaScript'in *kullanışlı* doğasına uyduğu için `public` olarak üstü kapalı şekilde belirlenir 🌹.
 
-Note that at runtime (in the generated JS) these have no significance but will give you compile time errors if you use them incorrectly. An example of each is shown below:
+Çalışma zamanında (üretilen JS'te) bunlar önemsizdir, ancak hatalı kullanırsanız derleme zamanı hataları verecektir. Her biri için örnek gösterim aşağıdadır:
 
 ```ts
 class FooBase {
@@ -96,13 +96,13 @@ class FooBase {
     protected z: number;
 }
 
-// EFFECT ON INSTANCES
+// ÖRNEKLERDEKİ ETKİ
 var foo = new FooBase();
 foo.x; // okay
 foo.y; // ERROR : private
 foo.z; // ERROR : protected
 
-// EFFECT ON CHILD CLASSES
+// ALT SINIFLARDAKİ ETKİ
 class FooChild extends FooBase {
     constructor() {
       super();
@@ -113,26 +113,26 @@ class FooChild extends FooBase {
 }
 ```
 
-As always these modifiers work for both member properties and member functions.
+Her zaman olduğu gibi, bu belirleyiciler hem eleman özellikleri hem de eleman fonksiyonları için çalışır.
 
-### Abstract
-`abstract` can be thought of as an access modifier. We present it separately because opposed to the previously mentioned modifiers it can be on a `class` as well as any member of the class. Having an `abstract` modifier primarily means that such functionality *cannot be directly invoked* and a child class must provide the functionality.
+### Abstract (Soyut)
+`abstract` erişim belirleyici olarak düşünülebilir. Ayrı olarak ele almaktayız, çünkü daha önce bahsedilen belirleyicilerle birlikte bir `sınıfın` yanı sıra, sınıfın herhangi bir elemanı da olabilir. `abstract` bir belirleyiciye sahip olmak, öncelikle bu işlevselliği *doğrudan çağrılamaz* ve bir alt sınıfı fonksiyonları sağlamalıdır demektir.
 
-* `abstract` **classes** cannot be directly instantiated. Instead the user must create some `class` that inherit from the `abstract class`.
-* `abstract` **members** cannot be directly accessed and a child class must provide the functionality.
+* `abstract` **sınıflar** doğrudan örneklenemezler. Bunun yerine kullanıcı `abstract sınıf`'tan türemiş `sınıf` yaratmalıdır.
+* `abstract` **elemanlar** doğrudan erişilemez ve alt sınıf, fonksiyonları sağlamalıdır.
 
-### Constructor is optional
+### Yapıcı Metot (Constructor) İsteğe Bağlıdır
 
-The class does not need to have a constructor. e.g. the following is perfectly fine. 
+Sınıfın yapıcı metoda sahip olması gerekmez. Sıradaki örnek bunun için güzel bir örnektir. 
 
 ```ts
 class Foo {}
 var foo = new Foo();
 ```
 
-### Define using constructor
+### Yapıcı Metot kullanım tanımı
 
-Having a member in a class and initializing it like below:
+Sınıfta bir elemana sahip olmak ve onu aşağıdaki gibi yüklenmesi:
 
 ```ts
 class Foo {
@@ -142,7 +142,7 @@ class Foo {
     }
 }
 ```
-is such a common pattern that TypeScript provides a shorthand where you can prefix the member with an *access modifier* and it is automatically declared on the class and copied from the constructor. So the previous example can be re-written as (notice `public x:number`):
+bu TypeScript'in elemanı *erişim belirleyici* ile ön ek olarak sağladığı yaygın bir kalıptır, sınıf üzerinde otomatik olarak deklare edilir ve yapıcı metotdan kopyalanır. Yani önceki örnek şu şekilde tekrar yazılabilir (dikkat `public x:number`):
 
 ```ts
 class Foo {
@@ -151,12 +151,12 @@ class Foo {
 }
 ```
 
-### Property initializer
-This is a nifty feature supported by TypeScript (from ES7 actually). You can initialize any member of the class outside the class constructor, useful to provide default (notice `members = []`)
+### Özellik yükleyici
+Bu TypeScript tarafından desteklenen havalı bir özelliktir (ES7'nin aslında). Sınıfın yapıcı metodu dışında herhangi bir sınıf elemanını yükleyebilirsiniz, varsayılanı sağlamak için kullanışlıdır (dikkat `members = []`)
 
 ```ts
 class Foo {
-    members = [];  // Initialize directly
+    members = [];  // Direk olarak yüklenir
     add(x) {
         this.members.push(x);
     }

@@ -1,10 +1,10 @@
-#### Class extensibility
+#### Sınıf genişletilebilirliği
 
-People often add properties to classes from other JavaScript libraries. Here is a simple JavaScript example of this:
+İnsanlar sıklıkla diğer JavaScript kitaplıklarındaki sınıflara özellikler ekler. İşte basit bir JavaScript örneği:
 
 ```js
-// Original Library
+// Asıl Kütüphane
 function Foo {}
 
-// Third party extension to add new member properties
+// Yeni eleman özellikleri eklemek için üçüncü taraf (third party) uzantısı 
 ```

@@ -1,5 +1,5 @@
-#### What's up with the IIFE
-The js generated for the class could have been:
+#### IIFE Nedir Ne Değildir?
+Sınıf için üretilen js şöyle olabilirdi:
 ```ts
 function Point(x, y) {
     this.x = x;
@@ -10,7 +10,7 @@ Point.prototype.add = function (point) {
 };
 ```
 
-The reason its wrapped in an Immediately-Invoked Function Expression (IIFE) i.e.
+Sebebi  Anlık-Çağrılan Fonksiyon İfadesi (Immediately-Invoked Function Expression) (IIFE) ile sarmalanmıştır, yani:
 
 ```ts
 (function () {
@@ -21,7 +21,7 @@ The reason its wrapped in an Immediately-Invoked Function Expression (IIFE) i.e.
 })();
 ```
 
-has to do with inheritance. It allows TypeScript to capture the base class as a variable `_super` e.g.
+kalıtım ile yapar. TypeScript'in üst sınıfını `_super` değişkeni olarak yakalamasına olanak tanır örnegin :
 
 ```ts
 var Point3D = (function (_super) {
@@ -38,10 +38,10 @@ var Point3D = (function (_super) {
 })(Point);
 ```
 
-Notice that the IIFE allows TypeScript to easily capture the base class `Point` in a `_super` variable and that is used consistently in the class body.
+Dikkat edin IIFE, TypeScript'in kolayca üst sınıf `Point` içerisindeki `_super` değişkenini yakalamasına izin verir ve sınıfın ana bloğunda sürekli olarak kullanılır.
 
 ### `__extends`
-You will notice that as soon as you inherit a class TypeScript also generates the following function:
+Şunu farkedeceksiniz ki bir sınıftan kalıtım yaptığınız anda TypeScript ayrıca aşağıdaki fonksiyonu da oluşturur:
 ```ts
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -50,58 +50,58 @@ var __extends = this.__extends || function (d, b) {
     d.prototype = new __();
 };
 ```
-Here `d` refers to the derived class and `b` refers to the base class. This function does two things:
-1. copies the static members of the base class onto the child class i.e. `for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];`
-1. sets up the child class function's prototype to optionally lookup members on the parent's `proto` i.e. effectively `d.prototype.__proto__ = b.prototype`
+Burada `d` türetilmiş sınıfı ve `b` üst sınıfı ifade eder. Bu fonksiyon iki şey yapar:
+1. `for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];` yani üst sınıfının statik elemanlarını alt sınıfının üzerine kopyalar 
+1. `d.prototype.__proto__ = b.prototype` yani etkin biçimde, alt sınıfının fonksiyonlarının prototiplerini isteğe bağlı olarak arama elemanlarına üst sınıfının `proto`'ları üzerinde atama yapar
 
-People rarely have trouble understanding 1, but many people struggle with 2. So an explanation is in order.
+İnsanlar nadiren 1'i anlamakta zorlanırlar, ancak birçok kişi 2 ile mücadele verir. Bu yüzden sırası ile açıklamaları.
 
 #### `d.prototype.__proto__ = b.prototype`
 
-After having tutored many people about this I find the following explanation to be simplest. First we will explain how the code from `__extends` is equivalent to the simple `d.prototype.__proto__ = b.prototype`, and then why this line in itself is significant. To understand all this you need to know these things:
+Birçok insana bu konuyu anlattıktan sonra aşağıdaki açıklamayı en basit buluyorum. Öncelikle `__extends`'deki kodun nasıl basit `d.prototype.__proto__ = b.prototype`'a eşit olduğunu açıklayacağız, ve sonrasında kendi içindeki bu satırın neden değerli olduğunu. Bunu tamamen anlayabilmeniz için şunları bilmeniz gerekir:
 
 1. `__proto__`
 1. `prototype`
-1. effect of `new` on `this` inside the called function
-1. effect of `new` on `prototype` and `__proto__`
+1. çağrılan fonksiyon içerisinde `new`'ın `this` üzerindeki etkisi
+1. `new`'ın `prototype` ve `__proto__` üzerindeki etkisi
 
-All objects in JavaScript contain a `__proto__` member. This member is often not accessible in older browsers (sometimes documentation refers to this magical property as `[[prototype]]`). It has one objective: If a property is not found on an object during lookup (e.g. `obj.property`) then it is looked up at `obj.__proto__.property`. If it is still not found then `obj.__proto__.__proto__.property` till either: *it is found* or *the latest `.__proto__` itself is null*. This explains why JavaScript is said to support *prototypal inheritance* out of the box. This is shown in the following example, which you can run in the chrome console or nodejs:
+JavaScript'teki tüm nesneler `__proto__` elemanını içerir. Bu eleman eski tarayıcılar tarafından sıklıkla erişilemez durumdadır (bazen dökümantasyon bu sihirli özelliği `[[prototype]]` olarak ifade eder). Bunun tek bir görevi vardır: Eğer arama sırasında nesne üzerinde özellik bulunamazsa (örneğin `obj.property`) `obj.__proto__.property`'e bakacaktır. Eğer hala bulunamadıysa ozaman `obj.__proto__.__proto__.property`'a ta ki ikiside: *it is found* veya *the latest `.__proto__` itself is null* olana kadar. Bu JavaScript'in *prototipsel kalıtım(prototypal inheritance)* işlevselliğine neden destek dediğini açıklar. Bu aşağıdaki örnekte, chrome konsolunda veya nodejs'te çalıştırılacak şekilde gösterilmiştir:
 
 ```ts
 var foo = {}
 
-// setup on foo as well as foo.__proto__
+//  foo.__proto__'da olduğu gibi foo üzerinde hazırlanışı
 foo.bar = 123;
 foo.__proto__.bar = 456;
 
 console.log(foo.bar); // 123
-delete foo.bar; // remove from object
+delete foo.bar; // nesneden çıkar
 console.log(foo.bar); // 456
-delete foo.__proto__.bar; // remove from foo.__proto__
+delete foo.__proto__.bar; // foo.__proto__'dan çıkar
 console.log(foo.bar); // undefined
 ```
 
-Cool so you understand `__proto__`. Another useful information is that all `function`s in JavaScript have a property called `prototype` and that it has a member `constructor` pointing back to the function. This is shown below:
+`__proto__`'yu anlıyorsun harika. Başka bir yararlı bilgi ise, JavaScript içerisindeki tüm `fonksiyon`'lar `prototype` diye adlandırılan özelliğe sahiptir ve fonksiyonu geri işaret eden `constructor` elemanına sahiptir. Aşağıda gösterilmiştir:
 
 ```ts
 function Foo() { }
-console.log(Foo.prototype); // {} i.e. it exists and is not undefined
-console.log(Foo.prototype.constructor === Foo); // Has a member called `constructor` pointing back to the function
+console.log(Foo.prototype); // {} yani zaten var ve tanımlanmamış
+console.log(Foo.prototype.constructor === Foo); // `constructor` adında fonksiyonu geri işaret eden elemana sahip
 ```
 
-Now let's look at *effect of `new` on `this` inside the called function*. Basically `this` inside the called function is going to point to the newly created object that will be returned from the function. It's simple to see if you mutate a property on `this` inside the function:
+Şimdi hadi *çağrılan fonksiyon içerisinde `new`'ın `this` üzerindeki etkisi*'ne bakalım. Aslında çağrılan fonksiyon içerisindeki `this`, fonksiyondan geri dönecek yeni yaratılmış nesneyi işaret edecektir. Eğer fonksiyon içerisindeki `this` üzerinde özelliği değiştirirseniz bunu görmek çok basittir:
 
 ```ts
 function Foo() {
     this.bar = 123;
 }
 
-// call with the new operator
+// new operatörü ile çağrımı
 var newFoo = new Foo();
 console.log(newFoo.bar); // 123
 ```
 
-Now the only other thing you need to know is that calling `new` on a function copies the `prototype` of the function into the `__proto__` of the newly created object that is returned from the function call. Here is the code you can run to completely understand it:
+Şimdi öğrenmeniz gereken diğer son şey ise,fonksiyon üzerinde `new`'ı çağırmak, fonksiyon çağrısından dönen yeni yaratılmış nesnenin `__proto__`'su içindeki `prototype`'ı kopyalar. İşte çalıştırıp tamamen anlayabilmeniz için gereken kod bu:
 
 ```ts
 function Foo() { }
@@ -111,7 +111,7 @@ var foo = new Foo();
 console.log(foo.__proto__ === Foo.prototype); // True!
 ```
 
-That's it. Now look at the following straight out of `__extends`. I've taken the liberty to number these lines:
+İşte bu. Şimdi `__extends`'e göz atın. Bu satırları numaralandırma özgürlüğünü kendimde buldum:
 
 ```ts
 1  function __() { this.constructor = d; }
@@ -119,13 +119,13 @@ That's it. Now look at the following straight out of `__extends`. I've taken the
 3   d.prototype = new __();
 ```
 
-Reading this function in reverse the `d.prototype = new __()` on line 3 effectively means `d.prototype = {__proto__ : __.prototype}` (because of the effect of `new` on `prototype` and `__proto__`), combining it with the previous line (i.e. line 2 `__.prototype = b.prototype;`) you get `d.prototype = {__proto__ : b.prototype}`.
+Bu fonksiyonu satır 3 üzerindeki `d.prototype = new __()` tersten okumanın etkili anlamı `d.prototype = {__proto__ : __.prototype}` (`new`'ın `prototype` ve `__proto__` üzerindeki etkisi yüzünden), önceki satırdaki (yani satır 2 `__.prototype = b.prototype;`) ile birleştirme sonucunda `d.prototype = {__proto__ : b.prototype}` alırsınız.
 
-But wait, we wanted `d.prototype.__proto__` i.e. just the proto changed and maintain the old `d.prototype.constructor`. This is where the significance of the first line (i.e. `function __() { this.constructor = d; }`) comes in. Here we will effectively have `d.prototype = {__proto__ : __.prototype, d.constructor = d}` (because of the effect of `new` on `this` inside the called function). So, since we restore `d.prototype.constructor`, the only thing we have truly mutated is the `__proto__` hence `d.prototype.__proto__ = b.prototype`.
+Ama durun, biz `d.prototype.__proto__` istedik yani sadece prototip değişsin ve eski `d.prototype.constructor` sürsün. Burası tam olarak ilk satırın değerinin işin içine girdiği yer (yani `function __() { this.constructor = d; }`). Burada etkili şekilde `d.prototype = {__proto__ : __.prototype, d.constructor = d}`'a (çağrılan fonksiyon içerisinde `new`'ın `this` üzerindeki etkisi yüzünden) sahip olacağız. Yani, `d.prototype.constructor`'i eski haline getirdiğimizden beri, gerçekten değiştirdiğimiz tek şey `__proto__`, bu nedenle `d.prototype.__proto__ = b.prototype`.
 
-#### `d.prototype.__proto__ = b.prototype` significance
+#### `d.prototype.__proto__ = b.prototype` değeri
 
-The significance is that it allows you to add member functions to a child class and inherit others from the base class. This is demonstrated by the following simple example:
+Değer şu ki, bu sizin fonksiyon elemanlarınızı alt sınıfa eklemenize ve diğerlerini üst sınıflardan almanıza izin verir. Bunun gösterimi aşağıdaki basit örnekte yapılmıştır:
 
 ```ts
 function Animal() { }
@@ -139,4 +139,4 @@ var bird = new Bird();
 bird.walk();
 bird.fly();
 ```
-Basically `bird.fly` will be looked up from `bird.__proto__.fly` (remember that `new` makes the `bird.__proto__` point to `Bird.prototype`) and `bird.walk` (an inherited member) will be looked up from `bird.__proto__.__proto__.walk` (as `bird.__proto__ == Bird.prototype` and `bird.__proto__.__proto__` == `Animal.prototype`).
+Aslında `bird.fly` `bird.__proto__.fly`'da aranacaktır (remember that `new`'ın `bird.__proto__`'nun `Bird.prototype`'u işaret ettireceğini hatırlayın) ve `bird.walk` (türetilen eleman) `bird.__proto__.__proto__.walk`'da aranacaktır (`bird.__proto__ == Bird.prototype` ve `bird.__proto__.__proto__` == `Animal.prototype` gibi).
