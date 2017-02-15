@@ -1,6 +1,6 @@
 #### Sınıf genişletilebilirliği
 
-İnsanlar sıklıkla diğer JavaScript kitaplıklarındaki sınıflara özellikler ekler. İşte basit bir JavaScript örneği:
+İnsanlar sıklıkla diğer JavaScript kütüphanelerindeki sınıflara özellikler ekler. İşte basit bir JavaScript örneği:
 
 ```js
 // Asıl Kütüphane

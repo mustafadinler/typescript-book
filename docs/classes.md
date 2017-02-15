@@ -35,7 +35,7 @@ var Point = (function () {
     return Point;
 })();
 ```
-Şimdi bu, birinci sınıf dil yapısı olarak yeterince deyimsel bir geleneksel JavaScript sınıfı kalıbıdır.
+Şimdi bu, birinci sınıf dil yapısı olarak yeterince geleneksel bir JavaScript sınıfı kalıbıdır.
 
 ### Kalıtım
 Aşağıda gösterildiği gibi, TypeScript'teki sınıflar `extends` anahtar sözcüğü ile *tekil* kalıtımı destekler (diğer diller gibi):
