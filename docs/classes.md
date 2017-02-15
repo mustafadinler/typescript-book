@@ -156,7 +156,7 @@ Bu TypeScript tarafından desteklenen havalı bir özelliktir (ES7'nin aslında)
 
 ```ts
 class Foo {
-    members = [];  // Direk olarak yüklenir
+    members = [];  // Doğrudan yüklenir
     add(x) {
         this.members.push(x);
     }
