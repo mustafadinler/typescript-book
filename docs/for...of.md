@@ -1,5 +1,5 @@
 ### for...of
-A common error experienced by beginning JavaScript developers is that `for...in` for an array does not iterate over the array items. Instead it iterates over the *keys* of the object passed in. This is demonstrated in the below example. Here you would expect `9,2,5` but you get the indexes `0,1,2`:
+Dizi öğelerinin yinelenmesi için `for...in` kullanılması, Javascript'e yeni başlayan geliştiricilerin karşılaştıkları yaygın bir hatadır. Dizi elemanları yerine verilen nesnenin *anahtarlarını*(*keys*) yineler. Aşağıdaki örnekte gösterilmiştir. `9,2,5` beklemenize rağmen, çıkan sonuç `0,1,2` dizinleridir:
 
 ```ts
 var someArray = [9, 2, 5];
@@ -8,7 +8,7 @@ for (var item in someArray) {
 }
 ```
 
-This is one of the reasons why `for...of` exists in TypeScript (and ES6). The following iterates over the array correctly logging out the members as expected:
+`for...of`'un TypeScript'te (ve ES6'da) olma sebeplerinden biri, işte budur. Örneğin, sıradaki dizi doğru bir biçimde yinelenmekte ve elemanları beklenildiği gibi çıkmaktadır:
 
 ```ts
 var someArray = [9, 2, 5];
@@ -17,45 +17,50 @@ for (var item of someArray) {
 }
 ```
 
-Similarly TypeScript has no trouble going through a string character by character using `for...of`:
+TypeScript, karakter dizimindeki karakterleri yinelemek için de `for...of` kullanmanıza imkan sağlar:
 
 ```ts
-var hello = "is it me you're looking for?";
-for (var char of hello) {
-    console.log(char); // is it me you're looking for?
+var selam = "naber?";
+for (var char of selam) {
+    console.log(char); 
 }
+// 'n'
+// 'a'
+// 'b'
+// 'e'
+// 'r'
+// '?'
 ```
 
-#### JS Generation
-For pre ES6 targets TypeScript will generate the standard `for (var i = 0; i < list.length; i++)` kind of loop. For example here's what gets generated for our previous example:
+#### JS Oluşturulması
+TypeScript, ES6 öncesi için `for (var i = 0; i < list.length; i++)` benzeri standart bir döngü oluşturur. Önceki örneğimizin Javascript'te oluşturulmuş hali, şu şekildedir:
 ```ts
 var someArray = [9, 2, 5];
 for (var item of someArray) {
     console.log(item);
 }
 
-// becomes //
+// şuna dönüşür //
 
 for (var _i = 0; _i < someArray.length; _i++) {
     var item = someArray[_i];
     console.log(item);
 }
 ```
-You can see that using `for...of` makes *intent* clearer and also decreases the amount of code you have to write (and variable names you need to come up with).
+Gördüğünüz gibi `for...of` kullandığınızda *maksadınız* daha açıktır. Ayrıca yazdığınız kod miktarı (ve kullandığınız değişken isimleri) azalır.
 
-#### Limitations
-If you are not targeting ES6 or above, the generated code assumes the property `length` exists on the object and that the object can be indexed via numbers e.g. `obj[2]`. So it is only supported on `string` and `array` for these legacy JS engines.
+#### Kısıtlamalar
+Eğer ES6 veya üstünü hedeflemiyorsanız, oluşturulan kod, nesnede `length` özelliği olduğunu varsayar ve nesneye dizin kullanarak erişir, örneğin; `obj[2]`. Bu yüzden eski JS motorları sadece `string` ve `array` destekler.
 
-If TypeScript can see that you are not using an array or a string it will give you a clear error *"is not an array type or a string type"*;
+Eğer dizi veya karakter dizimi kullanmazsınız, TypeScript bunu görür ve *"dizi veya karakter dizimi tipinde değil"* hatası verir;
 ```ts
 let articleParagraphs = document.querySelectorAll("article > p");
-// Error: Nodelist is not an array type or a string type
+//Hata: Nodelist is not an array type or a string type
 for (let paragraph of articleParagraphs) {
     paragraph.classList.add("read");
 }
 ```
+`for...of`'u sadece dizi veya karakter dizimi olduğunu *bildiğiniz* şeylerde kullanın. Bu kısıtlamanın TypeScript'in ileriki sürümlerinde kaldırılabileceğini de göz önünde bulundurunuz.
 
-Use `for...of` only for stuff that *you know* to be an array or a string. Note that this limitation might be removed in a future version of TypeScript.
-
-#### Summary
-You would be surprised at how many times you will be iterating over the elements of an array. The next time you find yourself doing that, give `for...of` a go. You might just make the next person who reviews your code happy.
+#### Özet
+Dizilerde yinelemeyi ne kadar kullandığınızı bilseniz şaşırırsınız. Bir dahaki denemenizde, `for...of`'a bir şans verin. Belki de kodunuzu gözden geçiren bir sonraki kişiyi mutlu edeceksiniz. 
