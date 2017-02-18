@@ -1,23 +1,23 @@
 #### `super`
 
-Note that if you call `super` on a child class it is redirected to the `prototype` as shown below:
+Dikkat edin eğer alt sınıfınızda `super`çağrırsanız bu sizi aşağıda gösterildiği gibi `prototype`'a yönlendirecektir:
 
 ```ts
 class Base {
-    log() { console.log('hello world'); }
+    log() { console.log('merha dünya'); }
 }
 
 class Child extends Base {
     log() { super.log() };
 }
 ```
-generates:
+şunu üretir:
 
 ```js
 var Base = (function () {
     function Base() {
     }
-    Base.prototype.log = function () { console.log('hello world'); };
+    Base.prototype.log = function () { console.log('merha dünya'); };
     return Base;
 })();
 var Child = (function (_super) {
@@ -30,13 +30,13 @@ var Child = (function (_super) {
 })(Base);
 
 ```
-Notice `_super.prototype.log.call(this)`.
+`_super.prototype.log.call(this)`'e dikkat.
 
-This means that you cannot use `super` on member properties. Instead you should just use `this`.
+Bunun anlamı eleman özelliklerinizde `super`'i kullanamazsınız. Bunun yerine sadece `this` kullanmalısınız.
 
 ```ts
 class Base {
-    log = () => { console.log('hello world'); }
+    log = () => { console.log('merhaba dünya'); }
 }
 
 class Child extends Base {
@@ -44,18 +44,19 @@ class Child extends Base {
 }
 ```
 
-Notice since there is only one `this` shared between the `Base` and the `Child` class you need to use *different* names (here `log` and `logWorld`).
+`Base` ve `Child` sınıf arasında paylaşılan tek bir tane `this` olduğundan *farklı* adları kullanmanız gerektiğine dikkat edin (işte `log` ve `logWorld`).
 
-Also Note that TypeScript will warn you if you try to misuse `super`:
+Ayrıca, `super`'i yanlış kullanmaya çalışırsanız TypeScript sizi uyaracaktır:
 
 ```ts
 module quz {
     class Base {
-        log = () => { console.log('hello world'); }
+        log = () => { console.log('merhaba dünya'); }
     }
 
     class Child extends Base {
         // ERROR : only `public` and `protected` methods of base class are accessible via `super`
+        // HATA : sadece üst sınıfın `public` ve `protected` metotları `super` ile erişilebilirdir
         logWorld() { super.log() };
     }
 }
