@@ -1,30 +1,30 @@
-# Common Errors
-In this section we explain a number of common error codes that users experience in the real world.
+# Genel Hatalar
+Bu bölümde kullanıcıların gerçek hayatta deneyimledikleri birkaç genel hata kodunu açıklayacağız.
 
 ## TS2304
-Samples:
-> `Cannot find name ga`
+Örnek:
+> `Cannot find name ga (ga ismi bulunamıyor)`
 
-You are probably using a third party library (e.g. google analytics) and don't have it `declare`d. TypeScript tries to save you from *spelling mistakes* and *using variables without declaring them* so you need to be explicit on anything that is *available at runtime* because of you including some external library ([more on how to fix it][ambient]).
+Muhtemelen `declare (deklare)` etmediğiniz üçüncü parti bir kütüphane (örneğin google analytics) kullanıyorsunuz. TypeScript sizi *yazım hatalarından* ve *değişkenleri deklare etmeden kullanmanızdan* korumaya çalışır, yani *çalışma zamanında varolan* harhangi bir şeye açık olmalısınız çünkü bazı dış kütüphaneleri dahil ediyorsunuz ([nasıl düzeltileceğine dair dahası][ambient]).
 
 ## TS2307
-Samples:
-> `Cannot find module 'underscore'`
+Örnek:
+> `Cannot find module 'underscore' ('underscrore' modülü bulunamıyor)`
 
-You are probably using a third party library (e.g. underscore) as a *module* ([more on modules][modules]) and don't have the ambient declaration file for it ([more on ambient declarations][ambient]).
+Muhtemelen *modül* ([modüllere (modules) dair dahası][modules]) olarak üçüncü parti bir kütüphane (örneğin underscore) kullanıyorsunuz ve bunun için içsel deklarasyon dosyanız yok ([içsel deklarasyona dair dahası][ambient]).
 
 ## TS1148
-Sample:
-> Cannot compile modules unless the '--module' flag is provided
+Örnek:
+> Cannot compile modules unless the '--module' flag is provided ('--module' işareti sağlanmadığı sürece modüller derlenemez)
 
-Checkout the [section on modules][modules].
+[Modüller (modules) bölümü][modules]'ne göz atın.
 
-## For search indexing
-You can ignore reading this. This section is for search engine indexing.
+## Arama indekslemesi için
+Bu kısmı görmezden gelebilirsiniz. Bu kısım arama motoru indekslemesi için.
 
-> Other modules that people tend to use and get errors:
-* Cannot find name $
-* Cannot find module jquery
+> Kullanıcıların kullanmayı sevdiği ve hata vermeye eğilimli diğer modüller:
+* Cannot find name $ ($ ismi bulunamıyor)
+* Cannot find module jquery (jquery modülü bulunamıyor)
 
 [ambient]: ../types/ambient/d.ts.md
 [modules]: ../project/modules.md
