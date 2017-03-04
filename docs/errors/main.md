@@ -1,17 +1,17 @@
-# Genel Hatalar
+# Sıkça Karşılaşılan Hatalar
 Bu bölümde kullanıcıların gerçek hayatta deneyimledikleri birkaç genel hata kodunu açıklayacağız.
 
 ## TS2304
 Örnek:
 > `Cannot find name ga (ga ismi bulunamıyor)`
 
-Muhtemelen `declare (deklare)` etmediğiniz üçüncü parti bir kütüphane (örneğin google analytics) kullanıyorsunuz. TypeScript sizi *yazım hatalarından* ve *değişkenleri deklare etmeden kullanmanızdan* korumaya çalışır, yani *çalışma zamanında varolan* harhangi bir şeye açık olmalısınız çünkü bazı dış kütüphaneleri dahil ediyorsunuz ([nasıl düzeltileceğine dair dahası][ambient]).
+Muhtemelen `deklare (declare)` etmediğiniz üçüncü parti bir kütüphane (örneğin google analytics) kullanıyorsunuz. TypeScript sizi *yazım hatalarından* ve *değişkenleri deklare etmeden kullanmanızdan* korumaya çalışır, yani *çalışma zamanında varolan* harhangi bir şeye açık olmalısınız çünkü bazı dış kütüphaneleri dahil ediyorsunuz ([nasıl düzeltileceğine dair daha fazla bilgi][ambient]).
 
 ## TS2307
 Örnek:
 > `Cannot find module 'underscore' ('underscrore' modülü bulunamıyor)`
 
-Muhtemelen *modül* ([modüllere (modules) dair dahası][modules]) olarak üçüncü parti bir kütüphane (örneğin underscore) kullanıyorsunuz ve bunun için içsel deklarasyon dosyanız yok ([içsel deklarasyona dair dahası][ambient]).
+Muhtemelen üçüncü parti bir kütüphaneyi (örneğin underscore) *modül* ([modüllere (modules) dair daha fazla bilgi][modules]) olarak kullanıyorsunuz ve bunun için içsel deklarasyon dosyanız yok ([çsel deklarasyona dair daha fazla bilgi][ambient]).
 
 ## TS1148
 Örnek:
