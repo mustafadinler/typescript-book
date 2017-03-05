@@ -11,7 +11,7 @@ Muhtemelen `deklare (declare)` etmediğiniz üçüncü parti bir kütüphane (ö
 Örnek:
 > `Cannot find module 'underscore' ('underscrore' modülü bulunamıyor)`
 
-Muhtemelen üçüncü parti bir kütüphaneyi (örneğin underscore) *modül* ([modüllere (modules) dair daha fazla bilgi][modules]) olarak kullanıyorsunuz ve bunun için içsel deklarasyon dosyanız yok ([çsel deklarasyona dair daha fazla bilgi][ambient]).
+Muhtemelen üçüncü parti bir kütüphaneyi (örneğin underscore) *modül* ([modüllere (modules) dair daha fazla bilgi][modules]) olarak kullanıyorsunuz ve bunun için içsel deklarasyon dosyanız yok ([içsel deklarasyona dair daha fazla bilgi][ambient]).
 
 ## TS1148
 Örnek:
