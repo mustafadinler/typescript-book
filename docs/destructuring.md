@@ -44,7 +44,7 @@ Buna ek olarak bir yapının *derin*lerindeki veriye erişmek için parçalama i
 
 ```ts
 var foo = { bar: { bas: 123 } };
-var {bar: {bas}} = foo; // Effectively `var bas = foo.bar.bas;`
+var {bar: {bas}} = foo; // Etkin olarak `var bas = foo.bar.bas;`
 ```
 
 #### Dizi Parçalama
