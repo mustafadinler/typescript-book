@@ -1,11 +1,11 @@
-### Destructuring
+### Parçalama (*destructing*)
 
-TypeScript supports the following forms of Destructuring (literally named after de-structuring i.e. breaking up the structure):
+TypeScript aşağıda yer alan parçalama biçimlerini destekler:
 
-1. Object Destructuring
-1. Array Destructuring
+1. Nesne Parçalama
+2. Dizi Parçalama
 
-It is easy to think of destructuring as an inverse of *structuring*. The method of *structuring* in JavaScript is the object literal:
+Parçalamayı oluşturmanın tersi olarak düşünebilirsiniz. JavaScript'te nesneleri oluşturmanın yolu nesne sabitlerini (*object literal*) kullanmaktır;
 
 ```ts
 var foo = {
@@ -14,72 +14,75 @@ var foo = {
     }
 };
 ```
-Without the awesome *structuring* support built into JavaScript, creating new objects on the fly would indeed be very cumbersome. Destructuring brings the same level of convenience to getting data out of a structure.
+Eğer JavaScript'te bu şekildeki *oluşturma* yöntemi olmasaydı, anında yeni nesneler yaratmak oldukca zahmetli ve hantal olurdu.
+Parçalama işlemi de oluşturma ile aynı kullanım kolaylığı ile gerçekleştirilmektedir.
 
-#### Object Destructuring
-Destructuring is useful because it allows you to do in a single line, what would otherwise require multiple lines. Consider the following case:
+#### Nesne Parçalama
+Parçalama işlemi tek satırlık bir kod ile uygulanabildiği için kullanışlı ve kolaydır. Aşağıdaki örneği inceleyelim:
 
 ```ts
 var rect = { x: 0, y: 10, width: 15, height: 20 };
 
-// Destructuring assignment
+// Parçalama ifadesi
 var {x, y, width, height} = rect;
 console.log(x, y, width, height); // 0,10,15,20
 ```
-Here in the absence of destructuring you would have to pick off `x,y,width,height` one by one from `rect`.
+Eğer burada parçalama ifadesi olmasaydı, `x,y,width,height` değişkenlerini `rect` üzerinden teker teker çıkarırdık.
 
-To assign an extracted variable to a new variable name you can do the following:
+Çıkarılan değişkeni yeni bir değişkene atamak aşağıdaki şekilde gerçekleştirilir:
 
 ```ts
-// structure
+// oluşturma
 const obj = {"some property": "some value"};
 
-// destructure
+// parçalama
 const {"some property": someProperty} = obj;
 console.log(someProperty === "some value"); // true
 ```
 
-Additionally you can get *deep* data out of a structure using destructuring. This is shown in the following example:
+Buna ek olarak bir yapının *derin*lerindeki veriye erişmek için parçalama işleminden faydalanabilirsiniz. Aşağıdaki örneği inceleyelim:
 
 ```ts
 var foo = { bar: { bas: 123 } };
-var {bar: {bas}} = foo; // Effectively `var bas = foo.bar.bas;`
+var {bar: {bas}} = foo; // Etkin olarak `var bas = foo.bar.bas;`
 ```
 
-#### Array Destructuring
-A common programming question: "How to swap two variables without using a third one?". The TypeScript solution:
+#### Dizi Parçalama
+Yaygın bir programlama sorusu: "İki değişkenin değeri üçüncü bir değişken kullanmadan nasıl değiştirilir?". TypeScript çözümü:
 
 ```ts
 var x = 1, y = 2;
 [x, y] = [y, x];
 console.log(x, y); // 2,1
 ```
-Note that array destructuring is effectively the compiler doing the `[0], [1], ...` and so on for you. There is no guarantee that these values will exist.
+Buradaki önemli nokta şu; derleyici dizi parçalamayı `[0], [1], ...` şeklinde yaptığından dolayı bu değerlerin var olduğunun bir garantisi bulunmuyor. 
 
-#### Array Destructuring with rest
-You can pick up any number of elements from the array and get *an array* of the remaining elements using array destructuring with rest.
+
+#### Dizi Parçalama ve Kalanlar
+Bir diziden istediğiniz sayıda elemanı alıp, kalanları da yine *bir dizi* formunda alabilirsiniz.
 
 ```ts
 var [x, y, ...remaining] = [1, 2, 3, 4];
 console.log(x, y, remaining); // 1, 2, [3,4]
 ```
 
-#### Array Destructuring with ignores
-You can ignore any index by simply leaving its location empty i.e. `, ,` in the left hand side of the assignment. For example:
+#### Dizi Parçalama ve Atlananlar
+Bir dizi içerisindeki elemanı atlamak için index değerini `, ,` şeklinde boş bırakarak örnekteki gibi ilerleyebilirsiniz:
+
 ```ts
 var [x, , ...remaining] = [1, 2, 3, 4];
 console.log(x, remaining); // 1, [3,4]
 ```
 
-#### JS Generation
-The JavaScript generation for non ES6 targets simply involves creating temporary variables, just like you would have to do yourself without native language support for destructuring e.g.
+#### JS Oluşturulması
+ES6 dışında kalan ortamda JavaScript oluşturulması basitçe geçici değişkenler ile genel uygulanan yaklaşımdaki gibi gerçekleştirilir.
 
 ```ts
 var x = 1, y = 2;
 [x, y] = [y, x];
 console.log(x, y); // 2,1
 
-// becomes //
+// aşağıdaki gibi dönüştürülür //
 
 var x = 1, y = 2;
 _a = [y,x], x = _a[0], y = _a[1];
@@ -87,5 +90,5 @@ console.log(x, y);
 var _a;
 ```
 
-#### Summary
-Destructuring can make your code more readable and maintainable by reducing the line count and making the intent clear. Array destructuring can allow you to use arrays as though they were tuples.
+#### Özet
+Parçalama yaklaşımı, yazılan kod miktarını azaltarak, kod okunabilirliğini arttırır ve bakımını kolaylaştırır. Dizi parçalama işlemi de dizileri birer `tuple` gibi kullanılmasına olanak sağlar.
