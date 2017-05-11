@@ -1,6 +1,6 @@
-## Which files?
+## Hangi dosyalar?
 
-You can either use `files` to be explicit:
+Açık olarak ifade edebilmek için iki şekilde `files` kullanabilirsiniz:
 
 ```json
 {
@@ -10,7 +10,7 @@ You can either use `files` to be explicit:
 }
 ```
 
-or `include` and `exclude` to specify files. e.g.
+veya `include` ve `exclude` ile dosyaları belirtebilirsiniz. Örneğin,
 
 
 ```json
@@ -25,7 +25,7 @@ or `include` and `exclude` to specify files. e.g.
 }
 ```
 
-Some notes:
+Birkaç not:
 
-* if `files` are specified other options are ignored
-* `**/*` (e.g. sample usage `somefolder/**/*`) means all folder and any files (the extensions `.ts`/`.tsx` will be included and even `.js`/`.jsx` if `allowJs` is true)
+* eğer `files` belirtildiyse diğer seçenekler yok sayılır
+* `**/*` (örnek kullanımı `somefolder/**/*`) bütün klasörler ve bazı dosyalar anlamına gelir (`.ts`/`.tsx` dosya uzantıları dahil olacaktır ve eğer `allowJs` true ise `.js`/`.jsx` uzantıları bile bu uzantılara dahil olacaktır)
