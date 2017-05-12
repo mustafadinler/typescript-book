@@ -1,2 +1,2 @@
-## Compilation Context
-The compilation context is basically just a fancy term for grouping of the files that TypeScript will parse and analyze to determine what is valid and what isn't. Along with the information about which files, the compilation context contains information about *which compiler options*. A great way to define this logical grouping (we also like to use the term *project*) is using a `tsconfig.json` file.
+## Derleme İçerigi (Compilation Context) 
+Derleme içeriği temelde, TypeScript'in ayrıştırılacak ve analiz edilecek dosyaların gruplandırılması için neyin geçerli, neyin olmadığını belirlemek için basit bir terimdir. Hangi dosyalarla ilgili olduğu bilgisinin yanısıra, derleme içeriği *hangi derleyici seçenekleri*'nin kullanıldığı hakkında bilgi içerir. Bu mantıksal gruplamayı tanımlamanın en harika yolu `tsconfig.json` dosyası kullanmaktır (biz *project* terimini kullanmayı da seviyoruz).
