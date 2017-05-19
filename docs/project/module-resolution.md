@@ -1,14 +1,14 @@
 # TypeScript Module Resolution
 
-TypeScript's module resolution tries to model and support the real world modules systems / loaders there (commonjs/nodejs, amd/requirejs, ES6/systemjs etc.). The most simplest lookup is relative file path lookup. After that things become a bit complex *because of the nature of magical module loading done by various module loaders*.
+TypeScript's module resolution tries to model and support the real world modules systems / loaders there (commonjs/nodejs, amd/requirejs, ES6/systemjs etc.). En basit arama şekli relatif dosya yoluna bakmaktır. Bundan sonra ise işler *çeşitli modül yükleyicileri tarafından yapılan sihirli modül yüklemelerinin doğası gereği* birazcık karışmaya başlar.
 
-## File Extensions
+## Dosya Uzantıları (File Extensions)
 
-You import modules like `foo` or `./foo`. For any file path lookup TypeScript automatically checks for a `.ts` or `.d.ts` or `.tsx` or `.js` (optionally) or `.jsx` (optionally) file in the right order depending upon context. You should **not** provide a file extension with the module name (no `foo.ts`, just `foo`).
+Modülleri `foo` veya `./foo` gibi içe aktarırsınız. For any file path lookup TypeScript automatically checks for a `.ts` or `.d.ts` or `.tsx` or `.js` (optionally) or `.jsx` (optionally) file in the right order depending upon context. You should **not** provide a file extension with the module name (no `foo.ts`, just `foo`).
 
-## Relative File Module
+## Relatif Dosya Modülü (Relative File Module)
 
-An import with a relative path e.g.:
+Relatif yol ile içe aktarmaya örnek olarak:
 
 ```ts
 import foo = require('./foo');
@@ -18,13 +18,13 @@ Tells the TypeScript compiler to look for a TypeScript file at the relative loca
 
 ## Named Module
 
-The following statement:
+Aşağıdaki ifade:
 
 ```ts
 import foo = require('foo');
 ```
 
-Tells the TypeScript compiler to look for an external module in the following order:
+Typescript derleyicisine aşağıdaki sıra ile harici bir modül için arama yapmasını söyler:
 
 * A named [module declaration](#module-declaration) from a file already in the compilation context.
 * If still not resolved and you are compiling with `--module commonjs`  or have set `--moduleResolution node` then its looked up using the [*node modules*](#node-modules) resolution algorithm.
@@ -32,22 +32,22 @@ Tells the TypeScript compiler to look for an external module in the following or
 
 Note that `"foo"` can be a longer path string e.g. `"foo/bar/bas"`. The key here is that *it does not start with `./` or `../`*.
 
-## Module Declaration
+## Modül Deklarasyonu (Module Declaration)
 
-A module declaration looks like:
+Modül deklarasyonu şöyle gözükür:
 
 ```ts
 declare module "foo" {
 
-    /// Some variable declarations
+    /// Bazı değişken deklarasyonları
 
-    export var bar:number; /*sample*/
+    export var bar:number; /*örnek*/
 }
 ```
 
-This makes the module `"foo"`, *importable*.
+Bu `"foo"` modülünü, *içe aktarılamaz* yapar.
 
-## Node Modules
+## Node Modülleri (Node Modules)
 The node module resolution is actually pretty much the same one used by NodeJS / NPM ([official nodejs docs](https://nodejs.org/api/modules.html#modules_all_together)). Here is a simple mental model I have:
 
 * module `foo/bar` will resolve to some file : `node_modules/foo` (the module) + `foo/bar`
