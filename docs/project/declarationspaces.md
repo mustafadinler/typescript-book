@@ -1,16 +1,16 @@
-## Declaration Spaces
+## Deklarasyon Alanları
 
-There are two declaration spaces in TypeScript: The *variable* declaration space and the *type* declaration space. These concepts are explored below.
+TypeScript'te iki deklarasyon alanı vardır: *variable (değişken)* deklarasyon alanı ve *type (tip)* deklarasyon alanı. Bu konseptler aşağıda incelenmiştir.
 
-### Type Declaration Space
-The type declaration space contains stuff that can be used as a type annotation. E.g the following are a few type declarations:
+### Type (Tip) Deklarasyon Alanı
+Type (tip) deklarasyon alanı, tip belirteci olarak kullanılabilecek öğeleri içerir. Aşağıdakiler birkaç tip deklarasyona örnektir:
 
 ```ts
 class Foo { }
 interface Bar { }
 type Bas = {}
 ```
-This means that you can use `Foo`, `Bar`, `Bas` etc. as a type annotation. E.g.:
+Bunun anlamı `Foo`, `Bar`, `Bas` vb. tip belirteci olarak kullanabilirsiniz. Örneğin:
 
 ```ts
 var foo: Foo;
@@ -18,31 +18,31 @@ var bar: Bar;
 var bas: Bas;
 ```
 
-Notice that even though you have `interface Bar`, *you can't use it as a variable* because it doesn't contribute to the *variable declaration space*. This is shown below:
+Dikkat edin `interface Bar`'a sahip olsanız bile *onu değişken olarak kullanamazsınız*, çünkü o *variable (değişken) deklarasyon alanında* tanımlanıp aktarılamamış. Aşağıdaki örnekte gösterilmiştir:
 
 ```ts
 interface Bar {};
 var bar = Bar; // ERROR: "cannot find name 'Bar'"
 ```
 
-The reason why it says `cannot find name` is because the name `Bar` *is not defined* in the *variable* declaration space. That brings us to the next topic "Variable Declaration Space".
+`cannot find name (isim bulunamıyor)` demesinin sebebi ise, `Bar` isminin *variable (değişken)* deklarasyon alanında *tanımlanmamış* olmasıdır. Bu bizi bir sonraki "Variable (Değişken) Deklarasyon Alanı" konusuna götürüyor.
 
-### Variable Declaration Space
-The variable declaration space contains stuff that you can use as a variable. We saw that having `class Foo` contributes a type `Foo` to the *type* declaration space. Guess what?, it also contributes a *variable* `Foo` to the *variable* declaration space as shown below:
+### Variable (Değişken) Deklarasyon Alanı
+Variable (değişken) deklarasyon alanı, değişken belirteci olarak kullanılabilecek öğeleri içerir. `class Foo`'nun tip `Foo` olarak tanımlanıp *tip* deklarasyon alanına aktarılabildiğini gördük. Tahmin edin?, *değişken* `Foo` aynı zamanda *variable (değişken)* deklarasyon alanına aşağıda gösterildiği gibi tanımlanıp aktarıldı:
 
 ```ts
 class Foo { }
 var someVar = Foo;
 var someOtherVar = 123;
 ```
-This is great as sometimes you want to pass classes around as variables. Remember that
+Bazen sınıfları değişkenler olarak aktarmak istediğimiz için bu harika. Şunu hatırlayın
 
-* We couldn't use something like an `interface` that is *only* in the *type* declaration space as a variable.
+* *Sadece* *tip* deklarasyon alanındaki `interface (arayüz)` gibi şeyleri bir değişken olarak kullanamadık.
 
-Similarly something that you declare with `var`, is *only* in the *variable* declaration space and cannot be used as a type annotation:
+`var` olarak tanımladığınız birşey benzer olarak, *sadece* *variable (değişken)* deklarasyon alanı içerisinde olabilir ve tip belirteci olarak kullanılamaz:
 
 ```ts
 var foo = 123;
 var bar: foo; // ERROR: "cannot find name 'foo'"
 ```
-The reason why it says `cannot find name` is because the name `foo` *is not defined* in the *type* declaration space.
+`cannot find name (isim bulunamıyor)` demesinin sebebi ise, `foo` isminin *type (tip)* deklarasyon alanında *tanımlanmamış* olmasıdır.
